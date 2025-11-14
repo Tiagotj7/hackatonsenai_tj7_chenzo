@@ -1,12 +1,16 @@
-# Bloqueia acesso ao .env e arquivos sensíveis
-<FilesMatch "^(?:\.env|composer\.json|composer\.lock)$">
+# Bloqueia acesso a arquivos sensíveis
+<FilesMatch "^(?:\.env|composer\.(json|lock))$">
   Require all denied
 </FilesMatch>
 
-# Bloqueia acesso web às pastas config e db
+# Força HTTPS
 RewriteEngine On
+RewriteCond %{HTTPS} !=on
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Bloqueia acesso direto a pastas internas
 RewriteRule ^config/ - [F,L]
 RewriteRule ^db/ - [F,L]
 
-# Evita listar diretórios
+# Evita listagem de diretórios
 Options -Indexes
