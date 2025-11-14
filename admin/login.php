@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   }
 }
 
-$pageTitle = 'Login';
+$pageTitle = 'Voltar';
 require __DIR__ . '/header.php';
 ?>
 <div class="card" style="max-width:480px;margin:0 auto;">
