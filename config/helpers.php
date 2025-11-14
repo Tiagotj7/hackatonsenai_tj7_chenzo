@@ -4,14 +4,14 @@ require_once __DIR__ . '/config.php';
 
 // Fallbacks seguros
 if (!defined('APP_NAME')) {
-  define('APP_NAME', 'SENAI Chamados');
+  define('APP_NAME', 'SENAI Servicer Manager');
 }
 if (!defined('MAX_UPLOAD_MB')) {
   define('MAX_UPLOAD_MB', 2);
 }
 
 function app_name() {
-  return defined('APP_NAME') ? APP_NAME : 'SENAI Chamados';
+  return defined('APP_NAME') ? APP_NAME : 'SENAI Servicer Manager';
 }
 function max_upload_mb() {
   $v = defined('MAX_UPLOAD_MB') ? (int)MAX_UPLOAD_MB : 2;

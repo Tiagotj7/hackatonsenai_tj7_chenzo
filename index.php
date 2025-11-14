@@ -10,7 +10,7 @@ require_once __DIR__ . '/config/helpers.php';
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
     <title><?php echo e(app_name()); ?> - Sistema de Chamados Internos</title>
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url('/assets/css/style.css'); ?>">
     <style>
         /* Complemento visual exclusivo desta página */
     </style>
