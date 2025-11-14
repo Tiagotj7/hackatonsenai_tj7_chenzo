@@ -6,7 +6,7 @@ require_once __DIR__ . '/../config/mailer.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') redirect('users/create.php');
 verify_csrf();
 
-$nome = trim($_POST['users_nome'] ?? '');
+$nome = trim($_POST['users_nome'] ?? '');   // <- users_nome
 $matricula = trim($_POST['matricula'] ?? '');
 $cargo = trim($_POST['cargo'] ?? '');
 $curso = trim($_POST['curso'] ?? '');
@@ -40,20 +40,34 @@ if ($erros) {
 }
 
 $protocolo = gerar_protocolo($pdo);
+
 $pdo->beginTransaction();
 try {
-  $sql = "INSERT INTO tickets (protocolo, users_nome, matricula, cargo, curso, local_problema, descricao, tipo_id, setor_id, prioridade, email, status_id, image_path)
-          VALUES (:p,:n,:m,:c,:curso,:l,:d,:tipo,:setor,:pri,:e,1,:img)";
+  $sql = "INSERT INTO tickets
+          (protocolo, users_nome, matricula, cargo, curso, local_problema, descricao, tipo_id, setor_id, prioridade, email, status_id, image_path)
+          VALUES
+          (:p, :n, :m, :c, :curso, :l, :d, :tipo, :setor, :pri, :e, 1, :img)";
   $ins = $pdo->prepare($sql);
   $ins->execute([
-    ':p'=>$protocolo, ':n'=>$nome, ':m'=>$matricula, ':c'=>$cargo, ':curso'=>$curso?:null,
-    ':l'=>$local, ':d'=>$descricao, ':tipo'=>$tipo_id, ':setor'=>$setor_id, ':pri'=>$prioridade,
-    ':e'=>$email?:null, ':img'=>$image_path
+    ':p'    => $protocolo,
+    ':n'    => $nome,
+    ':m'    => $matricula,
+    ':c'    => $cargo,
+    ':curso'=> $curso ?: null,
+    ':l'    => $local,
+    ':d'    => $descricao,
+    ':tipo' => $tipo_id,
+    ':setor'=> $setor_id,
+    ':pri'  => $prioridade,
+    ':e'    => $email ?: null,
+    ':img'  => $image_path
   ]);
+
   $ticket_id = (int)$pdo->lastInsertId();
 
   $pdo->prepare("INSERT INTO ticket_movements (ticket_id, user_id, status_id, resposta)
-                 VALUES (:t,NULL,1,'Solicitação registrada.')")->execute([':t'=>$ticket_id]);
+                 VALUES (:t, NULL, 1, 'Solicitação registrada.')")
+      ->execute([':t'=>$ticket_id]);
 
   $pdo->commit();
 

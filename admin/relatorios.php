@@ -30,13 +30,12 @@ if (isset($_GET['export']) && $_GET['export']=='1') {
   header('Content-Type: text/csv; charset=utf-8');
   header('Content-Disposition: attachment; filename=relatorio_chamados.csv');
   $out = fopen('php://output', 'w');
-  fputcsv($out, ['Protocolo','users','Matrícula','Cargo','Curso','Local','Categoria','Setor','Prioridade','Status','Abertura','Atualização'], ';');
+  fputcsv($out, ['Protocolo','Usuário','Matrícula','Cargo','Curso','Local','Categoria','Setor','Prioridade','Status','Abertura','Atualização'], ';');
   foreach ($rows as $r) {
     fputcsv($out, [
       $r['protocolo'],$r['users_nome'],$r['matricula'],$r['cargo'],$r['curso'],
       $r['local_problema'],$r['categoria'],$r['setor'],$r['prioridade'],$r['status'],
-      date('d/m/Y H:i', strtotime($r['opened_at'])),
-      date('d/m/Y H:i', strtotime($r['updated_at']))
+      date('d/m/Y H:i', strtotime($r['opened_at'])), date('d/m/Y H:i', strtotime($r['updated_at']))
     ], ';');
   }
   fclose($out); exit;
@@ -52,52 +51,28 @@ require __DIR__ . '/header.php';
 <div class="card">
   <form method="get" class="grid cols-4">
     <input type="hidden" name="export" value="1">
-    <div class="form-group">
-      <label>Categoria</label>
+    <div class="form-group"><label>Categoria</label>
       <select name="tipo_id"><option value="">Todas</option>
-        <?php foreach ($tipos as $t): ?>
-          <option value="<?php echo (int)$t['id']; ?>"><?php echo e($t['nome']); ?></option>
-        <?php endforeach; ?>
+        <?php foreach ($tipos as $t): ?><option value="<?php echo (int)$t['id']; ?>"><?php echo e($t['nome']); ?></option><?php endforeach; ?>
       </select>
     </div>
-    <div class="form-group">
-      <label>Setor</label>
+    <div class="form-group"><label>Setor</label>
       <select name="setor_id"><option value="">Todos</option>
-        <?php foreach ($setores as $s): ?>
-          <option value="<?php echo (int)$s['id']; ?>"><?php echo e($s['nome']); ?></option>
-        <?php endforeach; ?>
+        <?php foreach ($setores as $s): ?><option value="<?php echo (int)$s['id']; ?>"><?php echo e($s['nome']); ?></option><?php endforeach; ?>
       </select>
     </div>
-    <div class="form-group">
-      <label>Status</label>
+    <div class="form-group"><label>Status</label>
       <select name="status_id"><option value="">Todos</option>
-        <?php foreach ($statuses as $st): ?>
-          <option value="<?php echo (int)$st['id']; ?>"><?php echo e($st['nome']); ?></option>
-        <?php endforeach; ?>
+        <?php foreach ($statuses as $st): ?><option value="<?php echo (int)$st['id']; ?>"><?php echo e($st['nome']); ?></option><?php endforeach; ?>
       </select>
     </div>
-    <div class="form-group">
-      <label>Prioridade</label>
-      <select name="prioridade"><option value="">Todas</option>
-        <option>Urgente</option><option>Média</option><option>Baixa</option>
-      </select>
+    <div class="form-group"><label>Prioridade</label>
+      <select name="prioridade"><option value="">Todas</option><option>Urgente</option><option>Média</option><option>Baixa</option></select>
     </div>
-    <div class="form-group">
-      <label>Local</label>
-      <input type="text" name="local">
-    </div>
-    <div class="form-group">
-      <label>Curso</label>
-      <input type="text" name="curso">
-    </div>
-    <div class="form-group">
-      <label>Período inicial</label>
-      <input type="date" name="periodo_ini">
-    </div>
-    <div class="form-group">
-      <label>Período final</label>
-      <input type="date" name="periodo_fim">
-    </div>
+    <div class="form-group"><label>Local</label><input type="text" name="local"></div>
+    <div class="form-group"><label>Curso</label><input type="text" name="curso"></div>
+    <div class="form-group"><label>Período inicial</label><input type="date" name="periodo_ini"></div>
+    <div class="form-group"><label>Período final</label><input type="date" name="periodo_fim"></div>
     <div class="form-group" style="grid-column:1/-1;">
       <button class="btn primary" type="submit">Exportar CSV</button>
     </div>
