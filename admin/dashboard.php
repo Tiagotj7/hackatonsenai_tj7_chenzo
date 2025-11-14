@@ -4,31 +4,42 @@ require_once __DIR__ . '/../config/helpers.php';
 require_once __DIR__ . '/../config/auth.php';
 require_admin();
 
-// KPIs e contagens
-$kpiTotal = (int)$pdo->query("SELECT COUNT(*) FROM tickets")->fetchColumn();
+// KPIs
+$kpiTotal  = (int)$pdo->query("SELECT COUNT(*) FROM tickets")->fetchColumn();
 $kpiAberta = (int)$pdo->query("SELECT COUNT(*) FROM tickets WHERE status_id=1")->fetchColumn();
-$kpiAnd = (int)$pdo->query("SELECT COUNT(*) FROM tickets WHERE status_id=2")->fetchColumn();
-$kpiConc = (int)$pdo->query("SELECT COUNT(*) FROM tickets WHERE status_id=3")->fetchColumn();
+$kpiAnd    = (int)$pdo->query("SELECT COUNT(*) FROM tickets WHERE status_id=2")->fetchColumn();
+$kpiConc   = (int)$pdo->query("SELECT COUNT(*) FROM tickets WHERE status_id=3")->fetchColumn();
 
 // Distribuição por prioridade
 $prio = $pdo->query("SELECT prioridade, COUNT(*) c FROM tickets GROUP BY prioridade")->fetchAll();
 $prioMap = ['Urgente'=>0,'Média'=>0,'Baixa'=>0];
 foreach ($prio as $p) $prioMap[$p['prioridade']] = (int)$p['c'];
 
-// Categorias mais demandadas (Top 5)
+// Top 5 categorias
 $cats = $pdo->query("SELECT rt.nome AS categoria, COUNT(*) c
                      FROM tickets t
                      JOIN request_types rt ON rt.id = t.tipo_id
                      GROUP BY rt.id
-                     ORDER BY c DESC
-                     LIMIT 5")->fetchAll();
+                     ORDER BY c DESC LIMIT 5")->fetchAll();
 
-// Dados para os gráficos (status e categorias)
+// Mapa por setor (abertas/andamento/concluídas/total)
+$setorResumo = $pdo->query("
+  SELECT s.nome AS setor,
+         SUM(t.status_id=1) AS abertas,
+         SUM(t.status_id=2) AS andamento,
+         SUM(t.status_id=3) AS concluidas,
+         COUNT(*) AS total
+  FROM tickets t
+  JOIN sectors s ON s.id = t.setor_id
+  GROUP BY s.id
+  ORDER BY total DESC
+")->fetchAll();
+
+// Dados dos gráficos
 $chartStatusLabels = ['Abertas','Em andamento','Concluídas'];
-$chartStatusData = [$kpiAberta, $kpiAnd, $kpiConc];
-
-$chartCatLabels = array_map(fn($r)=>$r['categoria'], $cats);
-$chartCatData   = array_map(fn($r)=>(int)$r['c'], $cats);
+$chartStatusData   = [$kpiAberta, $kpiAnd, $kpiConc];
+$chartCatLabels    = array_map(fn($r)=>$r['categoria'], $cats);
+$chartCatData      = array_map(fn($r)=>(int)$r['c'], $cats);
 
 $pageTitle = 'Dashboard';
 require __DIR__ . '/header.php';
@@ -44,7 +55,7 @@ require __DIR__ . '/header.php';
   <div class="card">
     <h3>Distribuição por Prioridade</h3>
     <?php foreach ($prioMap as $label => $val):
-      $perc = ($kpiTotal > 0) ? round(($val / $kpiTotal) * 100) : 0; ?>
+      $perc = ($kpiTotal > 0) ? round(($val/$kpiTotal)*100) : 0; ?>
       <div style="margin-bottom:10px;">
         <div style="display:flex;justify-content:space-between;">
           <span><?php echo e($label); ?></span><span><?php echo $val; ?> (<?php echo $perc; ?>%)</span>
@@ -71,20 +82,41 @@ require __DIR__ . '/header.php';
   </div>
 </div>
 
-<!-- NOVO: Gráficos -->
+<!-- Gráficos -->
 <div class="grid cols-2">
   <div class="card">
     <h3>Chamados por Status</h3>
-    <div style="height:280px;">
-      <canvas id="chartStatus"></canvas>
-    </div>
+    <div style="height:280px;"><canvas id="chartStatus"></canvas></div>
   </div>
   <div class="card">
     <h3>Top Categorias</h3>
-    <div style="height:280px;">
-      <canvas id="chartCategorias"></canvas>
-    </div>
+    <div style="height:280px;"><canvas id="chartCategorias"></canvas></div>
   </div>
+</div>
+
+<!-- Mapa por Setor -->
+<div class="card">
+  <h3>Mapa por Setor</h3>
+  <?php if (!$setorResumo): ?>
+    <p>Nenhum dado.</p>
+  <?php else: ?>
+    <div class="table-responsive">
+      <table class="table">
+        <thead><tr><th>Setor</th><th>Abertas</th><th>Em andamento</th><th>Concluídas</th><th>Total</th></tr></thead>
+        <tbody>
+          <?php foreach ($setorResumo as $row): ?>
+            <tr>
+              <td><?php echo e($row['setor']); ?></td>
+              <td><?php echo (int)$row['abertas']; ?></td>
+              <td><?php echo (int)$row['andamento']; ?></td>
+              <td><?php echo (int)$row['concluidas']; ?></td>
+              <td><strong><?php echo (int)$row['total']; ?></strong></td>
+            </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  <?php endif; ?>
 </div>
 
 <div class="card">
@@ -92,11 +124,10 @@ require __DIR__ . '/header.php';
   <a class="btn" href="<?php echo base_url('admin/relatorios.php'); ?>">Relatórios</a>
 </div>
 
-<!-- Chart.js CDN + script dos gráficos -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Chart.js local -->
+<script src="<?php echo base_url('assets/js/chart.min.js'); ?>"></script>
 <script>
 (function(){
-  // Dados vindos do PHP
   const statusLabels = <?php echo json_encode($chartStatusLabels, JSON_UNESCAPED_UNICODE); ?>;
   const statusData   = <?php echo json_encode($chartStatusData); ?>;
   const catLabels    = <?php echo json_encode($chartCatLabels, JSON_UNESCAPED_UNICODE); ?>;
@@ -104,101 +135,39 @@ require __DIR__ . '/header.php';
 
   let chartStatus, chartCats;
 
-  function cssVar(name) {
-    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#ccc';
-    // ex.: cssVar('--primary')
-  }
+  function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#ccc'; }
 
-  function makeStatusChart(ctx) {
-    const bg = [
-      cssVar('--warning'), // abertas
-      cssVar('--info'),    // em andamento
-      cssVar('--success')  // concluídas
-    ];
-    const border = bg.map(c => c);
-    return new Chart(ctx, {
-      type: 'doughnut',
-      data: {
-        labels: statusLabels,
-        datasets: [{
-          data: statusData,
-          backgroundColor: bg,
-          borderColor: border,
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-          legend: { position: 'bottom', labels: { color: cssVar('--text') } },
-          tooltip: { enabled: true }
-        }
-      }
+  function makeStatusChart(ctx){
+    const bg = [cssVar('--warning'), cssVar('--info'), cssVar('--success')];
+    return new Chart(ctx, { type: 'doughnut',
+      data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: bg, borderColor: bg, borderWidth: 1 }] },
+      options: { responsive:true, maintainAspectRatio:false,
+        plugins:{ legend:{ position:'bottom', labels:{ color: cssVar('--text') } } } }
     });
   }
 
-  function makeCatsChart(ctx) {
+  function makeCatsChart(ctx){
     const primary = cssVar('--primary');
-    return new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: catLabels,
-        datasets: [{
-          label: 'Quantidade',
-          data: catData,
-          backgroundColor: primary + 'cc',
-          borderColor: primary,
-          borderWidth: 1,
-          borderRadius: 6,
-          maxBarThickness: 42
-        }]
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        scales: {
-          x: {
-            ticks: { color: cssVar('--text') },
-            grid: { color: cssVar('--border') }
-          },
-          y: {
-            beginAtZero: true,
-            ticks: { color: cssVar('--text') },
-            grid: { color: cssVar('--border') }
-          }
-        },
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: true }
-        }
-      }
+    return new Chart(ctx, { type: 'bar',
+      data:{ labels: catLabels, datasets:[{ label:'Quantidade', data: catData, backgroundColor: primary+'cc', borderColor: primary, borderWidth:1, borderRadius:6, maxBarThickness:42 }] },
+      options:{ responsive:true, maintainAspectRatio:false,
+        scales:{ x:{ ticks:{ color:cssVar('--text') }, grid:{ color:cssVar('--border') } }, y:{ beginAtZero:true, ticks:{ color:cssVar('--text') }, grid:{ color:cssVar('--border') } } },
+        plugins:{ legend:{ display:false } } }
     });
   }
 
-  function renderCharts() {
-    const ctxStatus = document.getElementById('chartStatus');
-    const ctxCats   = document.getElementById('chartCategorias');
-    if (chartStatus) chartStatus.destroy();
-    if (chartCats) chartCats.destroy();
-    if (ctxStatus) chartStatus = makeStatusChart(ctxStatus.getContext('2d'));
-    if (ctxCats)   chartCats   = makeCatsChart(ctxCats.getContext('2d'));
+  function renderCharts(){
+    const c1 = document.getElementById('chartStatus');
+    const c2 = document.getElementById('chartCategorias');
+    if (chartStatus) chartStatus.destroy(); if (chartCats) chartCats.destroy();
+    if (c1) chartStatus = makeStatusChart(c1.getContext('2d'));
+    if (c2) chartCats   = makeCatsChart(c2.getContext('2d'));
   }
 
-  // Render inicial
   renderCharts();
-
-  // Re-render quando alternar dark mode
   const toggle = document.getElementById('darkToggle');
-  if (toggle) toggle.addEventListener('change', () => {
-    setTimeout(renderCharts, 50);
-  });
-
-  // Re-render no resize (para ajustar labels)
-  window.addEventListener('resize', () => {
-    clearTimeout(window.__chartResizeTimer);
-    window.__chartResizeTimer = setTimeout(renderCharts, 200);
-  });
+  if (toggle) toggle.addEventListener('change', ()=> setTimeout(renderCharts, 50));
+  window.addEventListener('resize', ()=> { clearTimeout(window.__chartResizeTimer); window.__chartResizeTimer = setTimeout(renderCharts, 200); });
 })();
 </script>
 

@@ -2,9 +2,11 @@
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../config/helpers.php';
 
-$tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor FROM request_types rt
+$tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor
+                      FROM request_types rt
                       JOIN sectors s ON s.id=rt.setor_id
-                      WHERE rt.ativo=1 AND s.ativo=1 ORDER BY rt.nome")->fetchAll();
+                      WHERE rt.ativo=1 AND s.ativo=1
+                      ORDER BY rt.nome")->fetchAll();
 ?>
 <!doctype html>
 <html lang="pt-br">
@@ -13,7 +15,6 @@ $tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor FROM request_types 
   <title>Abrir Solicitação - <?php echo e(app_name()); ?></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
-  <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
 </head>
 <body>
   <header class="navbar">
@@ -32,7 +33,7 @@ $tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor FROM request_types 
       <form method="post" action="<?php echo base_url('users/save.php'); ?>" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="csrf" value="<?php echo csrf_token(); ?>">
         <div class="grid cols-2">
-          <div class="form-group"><label>Nome do usuário</label><input type="text" name="users_nome" required></div>
+          <div class="form-group"><label>Nome do solicitante</label><input type="text" name="users_nome" required></div>
           <div class="form-group"><label>Matrícula</label><input type="text" name="matricula" required></div>
           <div class="form-group"><label>Cargo</label><input type="text" name="cargo" placeholder="Professor, Técnico, Funcionário..." required></div>
           <div class="form-group"><label>Curso (se aplicável)</label><input type="text" name="curso" placeholder="Ex.: Eletromecânica"></div>
@@ -47,7 +48,8 @@ $tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor FROM request_types 
           </div>
           <div class="form-group"><label>Prioridade</label>
             <select name="prioridade" required>
-              <option value="">Selecione...</option><option>Urgente</option><option>Média</option><option>Baixa</option>
+              <option value="">Selecione...</option>
+              <option>Urgente</option><option>Média</option><option>Baixa</option>
             </select>
           </div>
           <div class="form-group"><label>E-mail (para notificação de conclusão - opcional)</label><input type="email" name="email" placeholder="seuemail@senai.br"></div>

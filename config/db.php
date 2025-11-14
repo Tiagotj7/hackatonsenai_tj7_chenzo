@@ -3,13 +3,11 @@
 require_once __DIR__ . '/config.php';
 
 try {
-    // Resolve o host para IPv4 (boa prática no InfinityFree)
+    // Resolve host -> IPv4 (evita socket local)
     $resolvedHost = DB_HOST;
     if (!filter_var(DB_HOST, FILTER_VALIDATE_IP)) {
         $ip = @gethostbyname(DB_HOST);
-        if ($ip && $ip !== DB_HOST) {
-            $resolvedHost = $ip;
-        }
+        if ($ip && $ip !== DB_HOST) $resolvedHost = $ip;
     }
 
     $dsn = 'mysql:host=' . $resolvedHost . ';port=' . DB_PORT . ';dbname=' . DB_NAME . ';charset=utf8mb4';
@@ -27,8 +25,8 @@ try {
         ]
     );
 } catch (PDOException $e) {
-    if (defined('APP_ENV') && APP_ENV !== 'production') {
+    if (APP_ENV !== 'production') {
         die('Erro ao conectar ao MySQL: ' . $e->getMessage() . ' | DSN: ' . (isset($dsn) ? $dsn : ''));
     }
-    die('Erro ao conectar ao MySQL. Verifique as credenciais em config/config.php (DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASS).');
+    die('Erro ao conectar ao MySQL. Verifique config/config.php.');
 }

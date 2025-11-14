@@ -6,18 +6,18 @@ require_once __DIR__ . '/../config/mailer.php';
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') redirect('users/create.php');
 verify_csrf();
 
-$nome = trim($_POST['users_nome'] ?? '');   // <- users_nome
+$nome      = trim($_POST['users_nome'] ?? '');
 $matricula = trim($_POST['matricula'] ?? '');
-$cargo = trim($_POST['cargo'] ?? '');
-$curso = trim($_POST['curso'] ?? '');
-$local = trim($_POST['local_problema'] ?? '');
+$cargo     = trim($_POST['cargo'] ?? '');
+$curso     = trim($_POST['curso'] ?? '');
+$local     = trim($_POST['local_problema'] ?? '');
 $descricao = trim($_POST['descricao'] ?? '');
-$tipo_id = (int)($_POST['tipo_id'] ?? 0);
-$prioridade = $_POST['prioridade'] ?? '';
-$email = trim($_POST['email'] ?? '');
+$tipo_id   = (int)($_POST['tipo_id'] ?? 0);
+$prioridade= $_POST['prioridade'] ?? '';
+$email     = trim($_POST['email'] ?? '');
 
 $erros = [];
-foreach (['Nome'=>$nome, 'Matrícula'=>$matricula, 'Cargo'=>$cargo, 'Local'=>$local, 'Descrição'=>$descricao, 'Categoria'=>$tipo_id, 'Prioridade'=>$prioridade] as $campo=>$val) {
+foreach (['Nome'=>$nome,'Matrícula'=>$matricula,'Cargo'=>$cargo,'Local'=>$local,'Descrição'=>$descricao,'Categoria'=>$tipo_id,'Prioridade'=>$prioridade] as $campo=>$val) {
   if (empty($val)) $erros[] = "Campo obrigatório: $campo.";
 }
 if (!in_array($prioridade, ['Urgente','Média','Baixa'], true)) $erros[] = 'Prioridade inválida.';
@@ -25,7 +25,7 @@ if (!in_array($prioridade, ['Urgente','Média','Baixa'], true)) $erros[] = 'Prio
 $st = $pdo->prepare("SELECT setor_id FROM request_types WHERE id=:id AND ativo=1");
 $st->execute([':id'=>$tipo_id]);
 $tipoRow = $st->fetch();
-if (!$tipoRow) $erros[] = 'Categoria inválida.';
+if (!$tipoRow) $erros[]='Categoria inválida.';
 $setor_id = $tipoRow['setor_id'] ?? null;
 
 $image_path = null;
@@ -49,18 +49,9 @@ try {
           (:p, :n, :m, :c, :curso, :l, :d, :tipo, :setor, :pri, :e, 1, :img)";
   $ins = $pdo->prepare($sql);
   $ins->execute([
-    ':p'    => $protocolo,
-    ':n'    => $nome,
-    ':m'    => $matricula,
-    ':c'    => $cargo,
-    ':curso'=> $curso ?: null,
-    ':l'    => $local,
-    ':d'    => $descricao,
-    ':tipo' => $tipo_id,
-    ':setor'=> $setor_id,
-    ':pri'  => $prioridade,
-    ':e'    => $email ?: null,
-    ':img'  => $image_path
+    ':p'=>$protocolo, ':n'=>$nome, ':m'=>$matricula, ':c'=>$cargo, ':curso'=>$curso ?: null,
+    ':l'=>$local, ':d'=>$descricao, ':tipo'=>$tipo_id, ':setor'=>$setor_id,
+    ':pri'=>$prioridade, ':e'=>$email ?: null, ':img'=>$image_path
   ]);
 
   $ticket_id = (int)$pdo->lastInsertId();

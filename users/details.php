@@ -25,11 +25,9 @@ $movs->execute([':t'=>$ticket['id']]); $movs = $movs->fetchAll();
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Detalhe - <?php echo e($protocolo); ?> - <?php echo e(app_name()); ?></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
-  <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
 </head>
 <body>
   <header class="navbar">
@@ -45,7 +43,7 @@ $movs->execute([':t'=>$ticket['id']]); $movs = $movs->fetchAll();
     <div class="grid cols-2">
       <div class="card">
         <h3>Dados da Solicitação</h3>
-        <p><strong>Usuário:</strong> <?php echo e($ticket['users_nome']); ?> (<?php echo e($ticket['matricula']); ?>)</p>
+        <p><strong>Solicitante:</strong> <?php echo e($ticket['users_nome']); ?> (<?php echo e($ticket['matricula']); ?>)</p>
         <p><strong>Cargo:</strong> <?php echo e($ticket['cargo']); ?> <?php if ($ticket['curso']) echo ' | Curso: '.e($ticket['curso']); ?></p>
         <p><strong>Local:</strong> <?php echo e($ticket['local_problema']); ?></p>
         <p><strong>Categoria/Setor:</strong> <?php echo e($ticket['tipo_nome']); ?> / <?php echo e($ticket['setor_nome']); ?></p>
