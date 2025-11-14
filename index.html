@@ -1,42 +1,105 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Sistema de Gerenciamento de Solicitações de TI e Manutenção</title>
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{height:100%;display:flex;align-items:center;justify-content:center;font-family:Inter,system-ui,sans-serif;background:#f7f7fb;color:#0b1220}
-  .loading{display:flex;flex-direction:column;align-items:center;gap:20px}
-  .logo{width:70px;height:70px;background:linear-gradient(135deg,#2563eb,#06b6d4);display:flex;align-items:center;justify-content:center;border-radius:12px;color:white;font-weight:700;font-size:28px;
-        animation:pulse 1.5s infinite alternate}
-  .text{font-weight:600;font-size:20px;opacity:0;animation:fadeIn 2s forwards 0.5s}
-  .small{color:#6b7280;font-size:14px;opacity:0;animation:fadeIn 2s forwards 1s}
-  .progress{width:200px;height:8px;background:#e5e7eb;border-radius:4px;overflow:hidden;position:relative}
-  .bar{height:100%;width:0%;background:linear-gradient(90deg,#2563eb,#06b6d4);animation:fillBar 5s forwards}
-  
-  @keyframes pulse{
-    0%{transform:scale(1)}
-    50%{transform:scale(1.2)}
-    100%{transform:scale(1)}
-  }
-  @keyframes fadeIn{
-    to{opacity:1}
-  }
-  @keyframes fillBar{
-    to{width:100%}
-  }
-</style>
-<script>
-  setTimeout(()=>{window.location.href='index.php';},5000);
-</script>
-</head>
-<body>
-  <div class="loading">
-    <div class="logo">S+</div>
-    <div class="text">Carregando Painel</div>
-    <div class="progress"><div class="bar"></div></div>
-    <div class="small">Você será redirecionado em 5 segundos...</div>
-  </div>
-</body>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Sistema de Gerenciamento de Solicitações de TI e Manutenção</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: Inter, system-ui, sans-serif;
+        background: #f7f7fb;
+        color: #0b1220;
+      }
+      .loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      .logo {
+        width: 70px;
+        height: 70px;
+        background: linear-gradient(135deg, #2563eb, #06b6d4);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 12px;
+        color: white;
+        font-weight: 700;
+        font-size: 28px;
+        animation: pulse 1.5s infinite alternate;
+      }
+      .text {
+        font-weight: 600;
+        font-size: 20px;
+        opacity: 0;
+        animation: fadeIn 2s forwards 0.5s;
+      }
+      .small {
+        color: #6b7280;
+        font-size: 14px;
+        opacity: 0;
+        animation: fadeIn 2s forwards 1s;
+      }
+      .progress {
+        width: 200px;
+        height: 8px;
+        background: #e5e7eb;
+        border-radius: 4px;
+        overflow: hidden;
+        position: relative;
+      }
+      .bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #2563eb, #06b6d4);
+        animation: fillBar 5s forwards;
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.2);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      @keyframes fadeIn {
+        to {
+          opacity: 1;
+        }
+      }
+      @keyframes fillBar {
+        to {
+          width: 100%;
+        }
+      }
+    </style>
+    <script>
+      setTimeout(() => {
+        window.location.href = "index.php";
+      }, 5000);
+    </script>
+  </head>
+  <body>
+    <div class="loading">
+      <div class="logo">S+</div>
+      <div class="text">Carregando Painel</div>
+      <div class="progress"><div class="bar"></div></div>
+      <div class="small">Você será redirecionado em 5 segundos...</div>
+    </div>
+  </body>
 </html>
