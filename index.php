@@ -124,30 +124,3 @@ $APP = function_exists('app_name') ? app_name() : (defined('APP_NAME') ? APP_NAM
   </body>
   <script src="assets/js/app.js"></script>
 </html>
-
-
-<?php
-// DEBUG TEMPORÁRIO — REMOVA APÓS USAR
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-echo "<h2>PHP info</h2>";
-phpinfo();
-
-// Teste rápido de conexão com o banco (preencha com suas credenciais ou use variáveis de ambiente)
-$host = getenv('DB_HOST') ?: 'sql212.infinityfree.com';
-$db   = getenv('DB_NAME') ?: 'if0_40352073_db_agendeaqui';
-$user = getenv('DB_USER') ?: 'if0_40352073';
-$pass = getenv('DB_PASS') ?: 'xldkrDW2IYPMMuH';
-$charset = 'utf8mb4';
-
-echo "<h2>Teste DB</h2>";
-$dsn = "mysql:host={$host};dbname={$db};charset={$charset}";
-try {
-    $pdo = new PDO($dsn, $user, $pass, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
-    echo "Conexão com o DB OK.";
-} catch (PDOException $e) {
-    echo "Erro ao conectar no DB: " . htmlspecialchars($e->getMessage());
-}
-?>
