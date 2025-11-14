@@ -9,7 +9,7 @@ define('APP_ENV', 'production');
 define('APP_NAME', 'Senai Service Manager');
 
 // AJUSTE AQUI: seu domínio do InfinityFree (com https se tiver SSL)
-define('BASE_URL', 'https://seu-dominio.infinityfreeapp.com'); // ex.: https://if0_40352073.infinityfreeapp.com
+define('BASE_URL', 'https://if0_40352073.infinityfreeapp.com'); // ex.: https://if0_40352073.infinityfreeapp.com
 
 // MySQL (InfinityFree)
 define('DB_HOST', 'sql212.infinityfree.com');
