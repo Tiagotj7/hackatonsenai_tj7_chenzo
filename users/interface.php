@@ -5,6 +5,8 @@ require_once __DIR__ . '/../config/helpers.php';
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
+      <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+
   <title><?php echo e(app_name()); ?> - Área do users</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
