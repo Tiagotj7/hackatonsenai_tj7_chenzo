@@ -10,6 +10,7 @@ $APP = function_exists('app_name') ? app_name() : (defined('APP_NAME') ? APP_NAM
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
+    <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
     <title><?php echo e($APP); ?> - Sistema de Chamados Internos</title>
     <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
 </head>
