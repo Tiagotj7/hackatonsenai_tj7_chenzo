@@ -10,7 +10,7 @@ require_once __DIR__ . '/config/helpers.php';
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
     <title><?php echo e(app_name()); ?> - Sistema de Chamados Internos</title>
-    <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+    <link rel="stylesheet" href="/assets/css/style.css">
     <style>
         /* Complemento visual exclusivo desta página */
     </style>
@@ -20,15 +20,14 @@ require_once __DIR__ . '/config/helpers.php';
     <header class="navbar">
         <div class="container">
             <h1 style="display:flex;align-items:center;gap:8px;">
-                <span style="display:inline-grid;place-items:center;width:28px;height:28px;border-radius:6px;background:rgba(13,110,253,.15);color:var(--primary);font-weight:700;">S</span>
                 <?php echo e(app_name()); ?>
             </h1>
-            <div class="actions">
-                <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
-                    <input type="checkbox" id="darkToggle"> Modo escuro
-                </label>
-                <a class="btn" href="<?php echo base_url('admin/login.php'); ?>">Admin</a>
-            </div>
+        </div>
+        <div class="actions">
+            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+                <input type="checkbox" id="darkToggle"> Modo escuro
+            </label>
+            <a class="btn" href="<?php echo base_url('admin/login.php'); ?>">Admin</a>
         </div>
     </header>
 
