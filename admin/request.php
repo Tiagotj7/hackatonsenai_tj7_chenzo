@@ -118,7 +118,7 @@ if (isset($_GET['id'])):
           <label>Resposta/Andamento (opcional)</label>
           <textarea name="resposta" placeholder="Informe andamento, orientações ou conclusão..."></textarea>
         </div>
-        <button class="btn primary" type="submit">Salvar</button>
+        <button class="btn primary" type="submit">save</button>
       </form>
     </div>
   </div>

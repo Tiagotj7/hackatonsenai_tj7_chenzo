@@ -31,7 +31,7 @@ $tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor FROM request_types 
     <?php endforeach; ?>
 
     <div class="card">
-      <form method="post" action="<?php echo base_url('users/salvar.php'); ?>" enctype="multipart/form-data" createlidate>
+      <form method="post" action="<?php echo base_url('users/save.php'); ?>" enctype="multipart/form-data" createlidate>
         <input type="hidden" name="csrf" value="<?php echo csrf_token(); ?>">
         <div class="grid cols-2">
           <div class="form-group">

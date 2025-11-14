@@ -75,7 +75,7 @@ if ($matricula) {
                   <td><?php echo e($t['status_nome']); ?></td>
                   <td><?php echo e(date('d/m/Y H:i', strtotime($t['opened_at']))); ?></td>
                   <td><?php echo e(date('d/m/Y H:i', strtotime($t['updated_at']))); ?></td>
-                  <td><a class="btn" href="<?php echo base_url('users/detalhes.php?protocolo='.urlencode($t['protocolo'])); ?>">Ver</a></td>
+                  <td><a class="btn" href="<?php echo base_url('users/detailss.php?protocolo='.urlencode($t['protocolo'])); ?>">Ver</a></td>
                 </tr>
               <?php endforeach; ?>
             </tbody>

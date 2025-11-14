@@ -106,7 +106,7 @@ function upload_imagem($file) {
   $dest = rtrim(UPLOAD_DIR, '/\\') . '/' . $name;
 
   if (!move_uploaded_file($file['tmp_name'], $dest)) {
-    flash('error', 'Falha ao salvar a imagem.');
+    flash('error', 'Falha ao save a imagem.');
     return false;
   }
 

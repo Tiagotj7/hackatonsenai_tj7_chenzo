@@ -78,6 +78,6 @@ try {
   redirect('users/minhas.php?matricula=' . urlencode($matricula));
 } catch (Exception $e) {
   $pdo->rollBack();
-  flash('error', 'Erro ao salvar: ' . $e->getMessage());
+  flash('error', 'Erro ao save: ' . $e->getMessage());
   redirect('users/create.php');
 }

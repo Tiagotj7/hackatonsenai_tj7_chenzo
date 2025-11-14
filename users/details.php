@@ -32,7 +32,7 @@ $movs = $movs->fetchAll();
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <title>Detalhe - <?php echo e($protocolo); ?> - <?php echo APP_NAME; ?></title>
+  <title>details - <?php echo e($protocolo); ?> - <?php echo APP_NAME; ?></title>
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
 </head>
 <body>
