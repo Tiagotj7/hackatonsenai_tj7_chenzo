@@ -105,15 +105,10 @@ function active($file) {
         <h1><?php echo e(app_name()); ?></h1>
       </div>
 
-<!-- Toggle de tema (light/dark) -->
-<label class="theme-switch" title="Alternar tema">
-  <input id="darkToggle" type="checkbox" aria-label="Alternar tema claro/escuro">
-  <span class="track">
-    <span class="icon sun" aria-hidden="true">☀️</span>
-    <span class="icon moon" aria-hidden="true">🌙</span>
-    <span class="thumb"></span>
-  </span>
-</label>
+      <div class="admin-actions">
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer; white-space:nowrap;">
+          <input type="checkbox" id="darkToggle"> Modo escuro
+        </label>
 
         <nav class="admin-nav-links">
           <?php if ($isLogged): ?>

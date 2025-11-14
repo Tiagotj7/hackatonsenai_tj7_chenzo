@@ -1,4 +1,3 @@
-// assets/js/app.js (resumo – você já tem algo assim)
 (function(){
   const toggle = document.getElementById('darkToggle');
   const pref = localStorage.getItem('dark') === '1';
@@ -10,4 +9,13 @@
       localStorage.setItem('dark', toggle.checked ? '1' : '0');
     });
   }
+  document.querySelectorAll('form').forEach(f => {
+    f.addEventListener('submit', ev => {
+      if (!f.checkValidity()) {
+        ev.preventDefault();
+        const firstInvalid = f.querySelector(':invalid');
+        if (firstInvalid) firstInvalid.focus();
+      }
+    });
+  });
 })();
