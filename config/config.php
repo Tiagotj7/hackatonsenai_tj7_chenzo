@@ -7,7 +7,7 @@ define('DB_USER', 'root');
 define('DB_PASS', ''); // no XAMPP, normalmente vazio
 
 // URL base (ajuste se necessário)
-define('BASE_URL', '/senai-chamados');
+define('BASE_URL', '/');
 
 // Uploads
 define('UPLOAD_DIR', __DIR__ . '/../uploads');
