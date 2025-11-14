@@ -8,10 +8,10 @@ require_once __DIR__ . '/../config/auth.php';
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-      <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
-
   <title><?php echo isset($pageTitle) ? e($pageTitle) . ' - ' : ''; ?><?php echo e(app_name()); ?></title>
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+        <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
 <body>
   <nav class="navbar">
