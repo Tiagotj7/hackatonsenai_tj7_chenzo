@@ -21,10 +21,10 @@ if (file_exists($envFile)) {
 
 // Config visível para uso local com XAMPP
 // Ajuste estes valores conforme seu ambiente local
-define('DB_HOST', '127.0.0.1');
-define('DB_NAME', 'senai_service'); // <-- altere para o nome do seu banco local
-define('DB_USER', 'root');
-define('DB_PASS', ''); // XAMPP padrão: senha vazia
+define('DB_HOST', 'sql212.infinityfree.com');
+define('DB_NAME', 'if0_40352073_db_agendeaqui'); // <-- altere para o nome do seu banco local
+define('DB_USER', 'if0_40352073');
+define('DB_PASS', 'your_password_here'); // XAMPP padrão: senha vazia
 define('DB_CHARSET', 'utf8mb4');
 
 // Validação mínima
