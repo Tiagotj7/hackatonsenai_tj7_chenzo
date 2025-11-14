@@ -39,8 +39,8 @@ $APP = function_exists('app_name') ? app_name() : (defined('APP_NAME') ? APP_NAM
             </p>
             <h2>Acesse aqui o seu perfil</h2>
             <div class="links">
-              <a href="#">Solicitante</a>
-              <a href="#">Administrador</a>
+              <a href="users/interface.php">Solicitante</a>
+              <a href="users/myrequest.php">Consultar</a>
             </div>
           </div>
           <div class="glass">
