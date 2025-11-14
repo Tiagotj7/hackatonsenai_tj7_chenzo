@@ -23,7 +23,7 @@ Sistema web para gerenciamento de solicitações internas (TI/Manutenção).
 5. Acesse o domínio.
 
 ## Recursos
-- Solicitante (abrir, listar por matrícula, detalhes, upload).
+- Solicitante (abrir, listar por matrícula, detailss, upload).
 - Admin (login, dashboard, filtros, histórico, atualização de status).
 - CSV export, dark mode, CSRF, prepared statements.
 
