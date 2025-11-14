@@ -111,7 +111,6 @@ require __DIR__ . '/header.php';
   </div>
 </div>
 
-<!-- Mapa por Setor (responsivo para mobile) -->
 <div class="card">
   <h3>Mapa por Setor</h3>
   <?php if (!$setorResumo): ?>

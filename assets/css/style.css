@@ -103,7 +103,7 @@ header {
 
 
 
-/* ====== Mapa por Setor: compactação e responsividade mobile ====== */
+/* ====== Mapa por Setor (Mobile + Dark) ====== */
 .table-compact th, .table-compact td {
   padding: 8px 10px;
   font-size: 13px;
@@ -113,21 +113,30 @@ header {
   -webkit-overflow-scrolling: touch;
 }
 
-/* Mobile: até 480px vira "cards" empilhados */
+/* Ajustes finos de contraste no dark */
+.dark .table.mobile-map tr {
+  background: var(--card);
+  border-color: var(--border);
+  box-shadow: var(--shadow-sm);
+}
+.dark .table.mobile-map td + td {
+  border-top-color: var(--border);
+}
+
+/* Mobile: até 480px vira "cards" empilhados e sem overflow horizontal */
 @media (max-width: 480px) {
-  /* Evita overflow horizontal */
   html, body { overflow-x: hidden; }
   .container { overflow-x: hidden; }
   .card { padding: 12px; }
 
-  /* Some o thead e aplica estilo de card por linha */
   .table.mobile-map {
     width: 100%;
     display: block;
     border: 0;
   }
   .table.mobile-map thead { display: none; }
-  .table.mobile-map tbody { display: block; }
+  .table.mobile-map tbody { display: block; margin: 0; padding: 0; }
+
   .table.mobile-map tr {
     display: block;
     width: 100%;
@@ -146,19 +155,19 @@ header {
     gap: 10px;
     padding: 10px 12px;
     border: 0;
-    overflow-wrap: anywhere;   /* quebra nomes longos */
+    overflow-wrap: anywhere;
     word-break: break-word;
   }
   .table.mobile-map td + td {
     border-top: 1px dashed var(--border);
   }
 
-  /* Rótulos (por coluna) com largura fixa; valor ocupa o restante */
+  /* Rótulos por coluna (antes do valor) */
   .table.mobile-map td::before {
     color: var(--muted);
     font-weight: 600;
-    flex: 0 0 48%;
-    max-width: 48%;
+    flex: 0 0 46%;
+    max-width: 46%;
     text-align: left;
     content: '';
   }
@@ -168,9 +177,9 @@ header {
   .table.mobile-map td:nth-child(4)::before { content: 'Concluídas'; }
   .table.mobile-map td:nth-child(5)::before { content: 'Total'; }
 
-  /* Valor (à direita) ocupa o restante, com alinhamento seguro */
+  /* Valor ocupa o restante, alinhado à direita */
   .table.mobile-map td > * {
-    flex: 1 1 52%;
+    flex: 1 1 54%;
     text-align: right;
   }
 
@@ -180,7 +189,7 @@ header {
   }
 }
 
-/* Extra estreito (iPhone SE/375px): rótulos encurtados */
+/* Extra estreito: encurta rótulos longos para caber melhor */
 @media (max-width: 390px) {
   .table.mobile-map td:nth-child(3)::before { content: 'Andamento'; }
   .table.mobile-map td:nth-child(4)::before { content: 'Concl.'; }
