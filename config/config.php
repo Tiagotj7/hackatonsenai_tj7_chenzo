@@ -6,10 +6,12 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
 
+define('APP_ENV', env('APP_ENV', 'production'));
 define('APP_NAME', env('APP_NAME', 'Senai Service Manager'));
 
 // DB
 define('DB_HOST', env('DB_HOST', 'localhost'));
+define('DB_PORT', (int)env('DB_PORT', 3306));
 define('DB_NAME', env('DB_NAME', 'senai_chamados'));
 define('DB_USER', env('DB_USER', 'root'));
 define('DB_PASS', env('DB_PASS', ''));
@@ -29,7 +31,6 @@ define('BASE_URL', rtrim($base, '/'));
 // Uploads e Email
 define('UPLOAD_DIR', env('UPLOAD_DIR', dirname(__DIR__) . '/uploads'));
 define('MAX_UPLOAD_MB', (int)env('MAX_UPLOAD_MB', 2));
-
 define('EMAIL_ENABLED', filter_var(env('EMAIL_ENABLED', 'false'), FILTER_VALIDATE_BOOLEAN));
 define('EMAIL_FROM', env('EMAIL_FROM', 'no-reply@senai.local'));
 define('EMAIL_FROM_NAME', env('EMAIL_FROM_NAME', 'Senai Service Manager'));
