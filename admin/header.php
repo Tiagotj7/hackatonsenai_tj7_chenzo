@@ -22,7 +22,7 @@ require_once __DIR__ . '/../config/auth.php';
         <?php if (is_admin_logged()): $adm = current_admin(); ?>
           <span style="color:var(--muted);">Olá, <?php echo e($adm['nome']); ?></span>
           <a class="btn" href="<?php echo base_url('admin/dashboard.php'); ?>">Dashboard</a>
-          <a class="btn" href="<?php echo base_url('admin/solicitacao.php'); ?>">Tickets</a>
+          <a class="btn" href="<?php echo base_url('admin/request.php'); ?>">Tickets</a>
           <a class="btn" href="<?php echo base_url('admin/relatorios.php'); ?>">Relatórios</a>
           <a class="btn danger" href="<?php echo base_url('admin/logout.php'); ?>">Sair</a>
         <?php else: ?>
