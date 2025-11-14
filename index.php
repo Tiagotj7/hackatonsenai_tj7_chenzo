@@ -19,12 +19,12 @@ require_once __DIR__ . '/config/helpers.php';
 <body>
     <header class="navbar">
         <div class="container">
-            <h1 style="display:flex;align-items:center;gap:8px;">
+            <h1>
                 <?php echo e(app_name()); ?>
             </h1>
         </div>
         <div class="actions">
-            <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+            <label>
                 <input type="checkbox" id="darkToggle"> Modo escuro
             </label>
             <a class="btn" href="<?php echo base_url('admin/login.php'); ?>">Admin</a>
@@ -92,50 +92,29 @@ require_once __DIR__ . '/config/helpers.php';
 
         <!-- AÇÕES RÁPIDAS -->
         <section class="container">
-            <?php foreach (get_flash() as $f): ?>
-                <div class="alert <?php echo e($f['type']); ?>"><?php echo e($f['message']); ?></div>
-            <?php endforeach; ?>
-
-            <div class="quick">
-                <div class="card">
-                    <h3>Buscar Minhas Solicitações</h3>
-                    <p class="mini-muted">Informe sua matrícula para visualizar status, respostas e histórico.</p>
-                    <form method="get" action="<?php echo base_url('users/minhas.php'); ?>" class="grid cols-2" createlidate>
-                        <div class="form-group" style="grid-column:1/-1;">
-                            <label>Matrícula</label>
-                            <input type="text" name="matricula" placeholder="Ex.: 20231234" required>
+            <div class="card">
+                <h3>Como funciona</h3>
+                <div class="steps">
+                    <div class="lane"></div>
+                    <div class="step">
+                        <div class="num">1</div>
+                        <div class="body">
+                            <h5>Abra o chamado</h5>
+                            <p>Informe local, categoria, prioridade e descreva o problema.</p>
                         </div>
-                        <div class="form-group" style="grid-column:1/-1;">
-                            <button class="btn primary" type="submit">Consultar</button>
-                            <a class="btn" href="<?php echo base_url('users/create.php'); ?>">Abrir create solicitação</a>
+                    </div>
+                    <div class="step">
+                        <div class="num">2</div>
+                        <div class="body">
+                            <h5>Acompanhe o andamento</h5>
+                            <p>Veja atualizações do setor e receba retorno pelo histórico.</p>
                         </div>
-                    </form>
-                </div>
-
-                <div class="card">
-                    <h3>Como funciona</h3>
-                    <div class="steps" style="position:relative; padding-left:8px;">
-                        <div class="lane"></div>
-                        <div class="step">
-                            <div class="num">1</div>
-                            <div class="body">
-                                <h5>Abra o chamado</h5>
-                                <p>Informe local, categoria, prioridade e descreva o problema.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="num">2</div>
-                            <div class="body">
-                                <h5>Acompanhe o andamento</h5>
-                                <p>Veja atualizações do setor e receba retorno pelo histórico.</p>
-                            </div>
-                        </div>
-                        <div class="step">
-                            <div class="num">3</div>
-                            <div class="body">
-                                <h5>Concluído e registrado</h5>
-                                <p>Chamado finalizado com rastreabilidade e métricas.</p>
-                            </div>
+                    </div>
+                    <div class="step">
+                        <div class="num">3</div>
+                        <div class="body">
+                            <h5>Concluído e registrado</h5>
+                            <p>Chamado finalizado com rastreabilidade e métricas.</p>
                         </div>
                     </div>
                 </div>
