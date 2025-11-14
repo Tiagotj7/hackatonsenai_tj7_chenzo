@@ -27,7 +27,7 @@
       <section class="selection">
         <p>Selecione uma opção abaixo para prosseguir.</p>
         <a id="selection_admin" href="/admin/login.php">Administrador</a>
-        <a id="selection_users" href="users/interface.php">Usuário</a>
+        <a id="selection_users" href="/users/interface.php">Usuário</a>
       </section>
     </main>
   </body>
