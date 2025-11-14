@@ -1,0 +1,12 @@
+# Bloqueia acesso ao .env e arquivos sensíveis
+<FilesMatch "^(?:\.env|composer\.json|composer\.lock)$">
+  Require all denied
+</FilesMatch>
+
+# Bloqueia acesso web às pastas config e db
+RewriteEngine On
+RewriteRule ^config/ - [F,L]
+RewriteRule ^db/ - [F,L]
+
+# Evita listar diretórios
+Options -Indexes

@@ -1,0 +1,6 @@
+.env
+config/env.php   # se preferir manter fora do repo; ou mantenha e não ignore
+config/secrets.php
+uploads/*
+!uploads/.gitkeep
+db/database.sql
