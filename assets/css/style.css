@@ -100,3 +100,63 @@ header {
     background: var(--white);
   }
 }
+
+/* ===== Mapa por Setor - Mobile 375x667 ===== */
+.table-compact th, .table-compact td {
+  padding: 8px 10px;
+  font-size: 13px;
+}
+
+/* Melhor rolagem em iOS/Android */
+.table-responsive {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Empilhar como cartões no mobile */
+@media (max-width: 480px) {
+  /* título menor nos cards para caber melhor */
+  .card h3 { font-size: 16px; }
+
+  /* Remove bordas da tabela padrão e cabeçalho */
+  .table.mobile-map { border: 0; }
+  .table.mobile-map thead { display: none; }
+
+  /* Transforma cada linha em um card */
+  .table.mobile-map tbody { display: block; }
+  .table.mobile-map tr {
+    display: block;
+    background: var(--card);
+    margin-bottom: 12px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Cada célula vira uma linha no card, com rótulo (antes) e valor (depois) */
+  .table.mobile-map td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border: 0;
+    word-break: break-word;
+  }
+
+  /* Linha separadora entre os itens do card */
+  .table.mobile-map td + td {
+    border-top: 1px dashed var(--border);
+  }
+
+  /* Rótulos (fixos por índice de coluna) */
+  .table.mobile-map td:nth-child(1)::before { content: 'Setor'; color: var(--muted); font-weight: 600; }
+  .table.mobile-map td:nth-child(2)::before { content: 'Abertas'; color: var(--muted); font-weight: 600; }
+  .table.mobile-map td:nth-child(3)::before { content: 'Em andamento'; color: var(--muted); font-weight: 600; }
+  .table.mobile-map td:nth-child(4)::before { content: 'Concluídas'; color: var(--muted); font-weight: 600; }
+  .table.mobile-map td:nth-child(5)::before { content: 'Total'; color: var(--muted); font-weight: 600; }
+
+  /* Destaque visual para o total */
+  .table.mobile-map td:last-child strong {
+    font-size: 16px;
+  }
+}

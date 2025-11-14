@@ -1,4 +1,5 @@
 <?php
+// admin/dashboard.php
 require_once __DIR__ . '/../config/db.php';
 require_once __DIR__ . '/../config/helpers.php';
 require_once __DIR__ . '/../config/auth.php';
@@ -16,11 +17,14 @@ $prioMap = ['Urgente'=>0,'Média'=>0,'Baixa'=>0];
 foreach ($prio as $p) $prioMap[$p['prioridade']] = (int)$p['c'];
 
 // Top 5 categorias
-$cats = $pdo->query("SELECT rt.nome AS categoria, COUNT(*) c
-                     FROM tickets t
-                     JOIN request_types rt ON rt.id = t.tipo_id
-                     GROUP BY rt.id
-                     ORDER BY c DESC LIMIT 5")->fetchAll();
+$cats = $pdo->query("
+  SELECT rt.nome AS categoria, COUNT(*) c
+  FROM tickets t
+  JOIN request_types rt ON rt.id = t.tipo_id
+  GROUP BY rt.id
+  ORDER BY c DESC
+  LIMIT 5
+")->fetchAll();
 
 // Mapa por setor (abertas/andamento/concluídas/total)
 $setorResumo = $pdo->query("
@@ -45,20 +49,33 @@ $pageTitle = 'Dashboard';
 require __DIR__ . '/header.php';
 ?>
 <div class="grid cols-4">
-  <div class="card kpi"><div class="value"><?php echo $kpiTotal; ?></div><div class="label">Total</div></div>
-  <div class="card kpi"><div class="value"><?php echo $kpiAberta; ?></div><div class="label">Abertas</div></div>
-  <div class="card kpi"><div class="value"><?php echo $kpiAnd; ?></div><div class="label">Em andamento</div></div>
-  <div class="card kpi"><div class="value"><?php echo $kpiConc; ?></div><div class="label">Concluídas</div></div>
+  <div class="card kpi">
+    <div class="value"><?php echo $kpiTotal; ?></div>
+    <div class="label">Total</div>
+  </div>
+  <div class="card kpi">
+    <div class="value"><?php echo $kpiAberta; ?></div>
+    <div class="label">Abertas</div>
+  </div>
+  <div class="card kpi">
+    <div class="value"><?php echo $kpiAnd; ?></div>
+    <div class="label">Em andamento</div>
+  </div>
+  <div class="card kpi">
+    <div class="value"><?php echo $kpiConc; ?></div>
+    <div class="label">Concluídas</div>
+  </div>
 </div>
 
 <div class="grid cols-2">
   <div class="card">
     <h3>Distribuição por Prioridade</h3>
     <?php foreach ($prioMap as $label => $val):
-      $perc = ($kpiTotal > 0) ? round(($val/$kpiTotal)*100) : 0; ?>
+      $perc = ($kpiTotal > 0) ? round(($val / $kpiTotal) * 100) : 0; ?>
       <div style="margin-bottom:10px;">
         <div style="display:flex;justify-content:space-between;">
-          <span><?php echo e($label); ?></span><span><?php echo $val; ?> (<?php echo $perc; ?>%)</span>
+          <span><?php echo e($label); ?></span>
+          <span><?php echo $val; ?> (<?php echo $perc; ?>%)</span>
         </div>
         <div class="progress-bar"><div class="fill" style="width: <?php echo $perc; ?>%"></div></div>
       </div>
@@ -94,15 +111,23 @@ require __DIR__ . '/header.php';
   </div>
 </div>
 
-<!-- Mapa por Setor -->
+<!-- Mapa por Setor (responsivo para mobile) -->
 <div class="card">
   <h3>Mapa por Setor</h3>
   <?php if (!$setorResumo): ?>
     <p>Nenhum dado.</p>
   <?php else: ?>
     <div class="table-responsive">
-      <table class="table">
-        <thead><tr><th>Setor</th><th>Abertas</th><th>Em andamento</th><th>Concluídas</th><th>Total</th></tr></thead>
+      <table class="table mobile-map table-compact">
+        <thead>
+          <tr>
+            <th>Setor</th>
+            <th>Abertas</th>
+            <th>Em andamento</th>
+            <th>Concluídas</th>
+            <th>Total</th>
+          </tr>
+        </thead>
         <tbody>
           <?php foreach ($setorResumo as $row): ?>
             <tr>
@@ -124,7 +149,7 @@ require __DIR__ . '/header.php';
   <a class="btn" href="<?php echo base_url('admin/relatorios.php'); ?>">Relatórios</a>
 </div>
 
-<!-- Chart.js local -->
+<!-- Chart.js local (baixe chart.umd.min.js e salve como assets/js/chart.min.js) -->
 <script src="<?php echo base_url('assets/js/chart.min.js'); ?>"></script>
 <script>
 (function(){
@@ -135,39 +160,61 @@ require __DIR__ . '/header.php';
 
   let chartStatus, chartCats;
 
-  function cssVar(name){ return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#ccc'; }
+  function cssVar(name) {
+    return getComputedStyle(document.documentElement).getPropertyValue(name).trim() || '#ccc';
+  }
 
-  function makeStatusChart(ctx){
-    const bg = [cssVar('--warning'), cssVar('--info'), cssVar('--success')];
-    return new Chart(ctx, { type: 'doughnut',
-      data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: bg, borderColor: bg, borderWidth: 1 }] },
-      options: { responsive:true, maintainAspectRatio:false,
-        plugins:{ legend:{ position:'bottom', labels:{ color: cssVar('--text') } } } }
+  function makeStatusChart(ctx) {
+    const colors = [cssVar('--warning'), cssVar('--info'), cssVar('--success')];
+    return new Chart(ctx, {
+      type: 'doughnut',
+      data: { labels: statusLabels, datasets: [{ data: statusData, backgroundColor: colors, borderColor: colors, borderWidth: 1 }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'bottom', labels: { color: cssVar('--text') } } }
+      }
     });
   }
 
-  function makeCatsChart(ctx){
+  function makeCatsChart(ctx) {
     const primary = cssVar('--primary');
-    return new Chart(ctx, { type: 'bar',
-      data:{ labels: catLabels, datasets:[{ label:'Quantidade', data: catData, backgroundColor: primary+'cc', borderColor: primary, borderWidth:1, borderRadius:6, maxBarThickness:42 }] },
-      options:{ responsive:true, maintainAspectRatio:false,
-        scales:{ x:{ ticks:{ color:cssVar('--text') }, grid:{ color:cssVar('--border') } }, y:{ beginAtZero:true, ticks:{ color:cssVar('--text') }, grid:{ color:cssVar('--border') } } },
-        plugins:{ legend:{ display:false } } }
+    return new Chart(ctx, {
+      type: 'bar',
+      data: { labels: catLabels, datasets: [{ label: 'Quantidade', data: catData, backgroundColor: primary+'cc', borderColor: primary, borderWidth: 1, borderRadius: 6, maxBarThickness: 42 }] },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: { ticks: { color: cssVar('--text') }, grid: { color: cssVar('--border') } },
+          y: { beginAtZero: true, ticks: { color: cssVar('--text') }, grid: { color: cssVar('--border') } }
+        },
+        plugins: { legend: { display: false } }
+      }
     });
   }
 
-  function renderCharts(){
+  function renderCharts() {
     const c1 = document.getElementById('chartStatus');
     const c2 = document.getElementById('chartCategorias');
-    if (chartStatus) chartStatus.destroy(); if (chartCats) chartCats.destroy();
+    if (chartStatus) chartStatus.destroy();
+    if (chartCats) chartCats.destroy();
     if (c1) chartStatus = makeStatusChart(c1.getContext('2d'));
     if (c2) chartCats   = makeCatsChart(c2.getContext('2d'));
   }
 
+  // Render inicial
   renderCharts();
+
+  // Re-render ao alternar dark mode
   const toggle = document.getElementById('darkToggle');
-  if (toggle) toggle.addEventListener('change', ()=> setTimeout(renderCharts, 50));
-  window.addEventListener('resize', ()=> { clearTimeout(window.__chartResizeTimer); window.__chartResizeTimer = setTimeout(renderCharts, 200); });
+  if (toggle) toggle.addEventListener('change', () => setTimeout(renderCharts, 50));
+
+  // Re-render no resize
+  window.addEventListener('resize', () => {
+    clearTimeout(window.__chartResizeTimer);
+    window.__chartResizeTimer = setTimeout(renderCharts, 200);
+  });
 })();
 </script>
 
