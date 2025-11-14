@@ -26,6 +26,7 @@ $movs->execute([':t'=>$ticket['id']]); $movs = $movs->fetchAll();
 <head>
   <meta charset="utf-8">
       <link rel="shortcut icon" href="assets/images/favicon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
 
   <title>Detalhe - <?php echo e($protocolo); ?> - <?php echo e(app_name()); ?></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
