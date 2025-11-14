@@ -4,7 +4,7 @@ require_once __DIR__ . '/../config/helpers.php';
 require_once __DIR__ . '/../config/mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  redirect('users/nova.php');
+  redirect('users/create.php');
 }
 verify_csrf();
 
@@ -41,7 +41,7 @@ if (!empty($_FILES['imagem']['name'])) {
 
 if ($erros) {
   foreach ($erros as $err) flash('error', $err);
-  redirect('users/nova.php');
+  redirect('users/create.php');
 }
 
 $protocolo = gerar_protocolo($pdo);
@@ -66,7 +66,7 @@ try {
     $s = $pdo->prepare("SELECT email FROM sectors WHERE id=:id AND ativo=1");
     $s->execute([':id'=>$setor_id]);
     if ($emailSetor = $s->fetchColumn()) {
-      $body = "<p>Nova solicitação: <strong>$protocolo</strong></p>
+      $body = "<p>create solicitação: <strong>$protocolo</strong></p>
                <p>Prioridade: $prioridade</p>
                <p>Local: $local</p>
                <p>Descrição:<br>".nl2br(e($descricao))."</p>";
@@ -79,5 +79,5 @@ try {
 } catch (Exception $e) {
   $pdo->rollBack();
   flash('error', 'Erro ao salvar: ' . $e->getMessage());
-  redirect('users/nova.php');
+  redirect('users/create.php');
 }

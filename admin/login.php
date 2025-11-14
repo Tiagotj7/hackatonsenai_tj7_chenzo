@@ -58,7 +58,7 @@ $pageTitle = 'Login';
 require __DIR__ . '/header.php';
 ?>
 <div class="card" style="max-width:480px;margin:0 auto;">
-  <form method="post" novalidate>
+  <form method="post" createlidate>
     <input type="hidden" name="csrf" value="<?php echo csrf_token(); ?>">
     <div class="form-group">
       <label>Usuário</label>

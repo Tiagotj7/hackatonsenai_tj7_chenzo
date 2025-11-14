@@ -100,7 +100,7 @@ if (isset($_GET['id'])):
     </div>
     <div class="card">
       <h3>Atualizar Status / Responder</h3>
-      <form method="post" novalidate>
+      <form method="post" createlidate>
         <input type="hidden" name="csrf" value="<?php echo csrf_token(); ?>">
         <input type="hidden" name="id" value="<?php echo (int)$ticket['id']; ?>">
         <input type="hidden" name="update_ticket" value="1">

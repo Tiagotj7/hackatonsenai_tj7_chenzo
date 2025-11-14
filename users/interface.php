@@ -35,7 +35,7 @@ require_once __DIR__ . '/config/helpers.php';
         <h3>Sou users (Professor/Funcionário)</h3>
         <p>Abra um novo chamado ou acompanhe suas solicitações pelo número de matrícula.</p>
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
-          <a class="btn primary" href="<?php echo base_url('users/nova.php'); ?>">Abrir Solicitação</a>
+          <a class="btn primary" href="<?php echo base_url('users/create.php'); ?>">Abrir Solicitação</a>
           <a class="btn" href="<?php echo base_url('users/minhas.php'); ?>">Minhas Solicitações</a>
         </div>
       </div>

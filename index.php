@@ -100,14 +100,14 @@ require_once __DIR__ . '/config/helpers.php';
                 <div class="card">
                     <h3>Buscar Minhas Solicitações</h3>
                     <p class="mini-muted">Informe sua matrícula para visualizar status, respostas e histórico.</p>
-                    <form method="get" action="<?php echo base_url('users/minhas.php'); ?>" class="grid cols-2" novalidate>
+                    <form method="get" action="<?php echo base_url('users/minhas.php'); ?>" class="grid cols-2" createlidate>
                         <div class="form-group" style="grid-column:1/-1;">
                             <label>Matrícula</label>
                             <input type="text" name="matricula" placeholder="Ex.: 20231234" required>
                         </div>
                         <div class="form-group" style="grid-column:1/-1;">
                             <button class="btn primary" type="submit">Consultar</button>
-                            <a class="btn" href="<?php echo base_url('users/nova.php'); ?>">Abrir nova solicitação</a>
+                            <a class="btn" href="<?php echo base_url('users/create.php'); ?>">Abrir create solicitação</a>
                         </div>
                     </form>
                 </div>
@@ -145,7 +145,7 @@ require_once __DIR__ . '/config/helpers.php';
     <section class="access">
         <div>© <?php echo date('Y'); ?> <?php echo e(app_name()); ?> — SENAI</div>
         <div class="footer-links">
-            <a href="<?php echo base_url('users/nova.php'); ?>">Abrir Solicitação</a>
+            <a href="<?php echo base_url('users/create.php'); ?>">Abrir Solicitação</a>
             <a href="<?php echo base_url('admin/login.php'); ?>">Acesso Admin</a>
         </div>
     </section>
