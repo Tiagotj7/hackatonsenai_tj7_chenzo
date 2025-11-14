@@ -184,10 +184,10 @@ echo "<h2>PHP info</h2>";
 phpinfo();
 
 // Teste rápido de conexão com o banco (preencha com suas credenciais ou use variáveis de ambiente)
-$host = getenv('DB_HOST') ?: 'localhost';
-$db   = getenv('DB_NAME') ?: 'nome_do_banco';
-$user = getenv('DB_USER') ?: 'usuario';
-$pass = getenv('DB_PASS') ?: 'senha';
+$host = getenv('DB_HOST') ?: 'sql212.infinityfree.com';
+$db   = getenv('DB_NAME') ?: 'if0_40352073_db_agendeaqui';
+$user = getenv('DB_USER') ?: 'if0_40352073';
+$pass = getenv('DB_PASS') ?: 'xldkrDW2IYPMMuH';
 $charset = 'utf8mb4';
 
 echo "<h2>Teste DB</h2>";
