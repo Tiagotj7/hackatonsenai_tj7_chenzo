@@ -21,32 +21,26 @@ if ($matricula) {
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <title>Minhas Solicitações - <?php echo APP_NAME; ?></title>
+  <title>Minhas Solicitações - <?php echo e(app_name()); ?></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
 </head>
 <body>
-  <nav class="navbar">
+  <header class="navbar">
     <div class="container">
       <h1>Minhas Solicitações</h1>
       <div class="actions">
-        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
-          <input type="checkbox" id="darkToggle"> Modo escuro
-        </label>
-        <a class="btn" href="<?php echo base_url('interface.php'); ?>">Início</a>
+        <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="darkToggle"> Modo escuro</label>
+        <a class="btn" href="<?php echo base_url('index.php'); ?>">Início</a>
       </div>
     </div>
-  </nav>
+  </header>
   <div class="container">
-    <?php foreach (get_flash() as $f): ?>
-      <div class="alert <?php echo e($f['type']); ?>"><?php echo e($f['message']); ?></div>
-    <?php endforeach; ?>
+    <?php foreach (get_flash() as $f): ?><div class="alert <?php echo e($f['type']); ?>"><?php echo e($f['message']); ?></div><?php endforeach; ?>
 
     <div class="card">
       <form method="get">
-        <div class="form-group">
-          <label>Informe sua matrícula</label>
-          <input type="text" name="matricula" required value="<?php echo e($matricula); ?>">
-        </div>
+        <div class="form-group"><label>Informe sua matrícula</label><input type="text" name="matricula" required value="<?php echo e($matricula); ?>"></div>
         <button class="btn primary" type="submit">Buscar</button>
       </form>
     </div>
@@ -57,29 +51,29 @@ if ($matricula) {
         <?php if (!$tickets): ?>
           <p>Nenhuma solicitação encontrada.</p>
         <?php else: ?>
-          <table class="table">
-            <thead>
-              <tr>
+          <div class="table-responsive">
+            <table class="table">
+              <thead><tr>
                 <th>Protocolo</th><th>Categoria</th><th>Setor</th><th>Prioridade</th>
                 <th>Status</th><th>Abertura</th><th>Atualização</th><th>Ações</th>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($tickets as $t):
-                $p=strtolower($t['prioridade']); $cls=$p==='urgente'?'urgente':($p==='média'?'media':'baixa'); ?>
-                <tr>
-                  <td><?php echo e($t['protocolo']); ?></td>
-                  <td><?php echo e($t['tipo_nome']); ?></td>
-                  <td><?php echo e($t['setor_nome']); ?></td>
-                  <td><span class="badge <?php echo $cls; ?>"><?php echo e($t['prioridade']); ?></span></td>
-                  <td><?php echo e($t['status_nome']); ?></td>
-                  <td><?php echo e(date('d/m/Y H:i', strtotime($t['opened_at']))); ?></td>
-                  <td><?php echo e(date('d/m/Y H:i', strtotime($t['updated_at']))); ?></td>
-                  <td><a class="btn" href="<?php echo base_url('users/detailss.php?protocolo='.urlencode($t['protocolo'])); ?>">Ver</a></td>
-                </tr>
-              <?php endforeach; ?>
-            </tbody>
-          </table>
+              </tr></thead>
+              <tbody>
+                <?php foreach ($tickets as $t):
+                  $p=strtolower($t['prioridade']); $cls=$p==='urgente'?'urgente':($p==='média'?'media':'baixa'); ?>
+                  <tr>
+                    <td><?php echo e($t['protocolo']); ?></td>
+                    <td><?php echo e($t['tipo_nome']); ?></td>
+                    <td><?php echo e($t['setor_nome']); ?></td>
+                    <td><span class="badge <?php echo $cls; ?>"><?php echo e($t['prioridade']); ?></span></td>
+                    <td><?php echo e($t['status_nome']); ?></td>
+                    <td><?php echo e(date('d/m/Y H:i', strtotime($t['opened_at']))); ?></td>
+                    <td><?php echo e(date('d/m/Y H:i', strtotime($t['updated_at']))); ?></td>
+                    <td><a class="btn" href="<?php echo base_url('users/details.php?protocolo='.urlencode($t['protocolo'])); ?>">Ver</a></td>
+                  </tr>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
         <?php endif; ?>
       </div>
     <?php endif; ?>

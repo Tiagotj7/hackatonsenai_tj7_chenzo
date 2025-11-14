@@ -46,9 +46,7 @@ require __DIR__ . '/header.php';
     <?php else: ?>
       <ul>
         <?php foreach ($cats as $c): ?>
-          <li style="display:flex;justify-content:space-between;">
-            <span><?php echo e($c['categoria']); ?></span><strong><?php echo (int)$c['c']; ?></strong>
-          </li>
+          <li style="display:flex;justify-content:space-between;"><span><?php echo e($c['categoria']); ?></span><strong><?php echo (int)$c['c']; ?></strong></li>
         <?php endforeach; ?>
       </ul>
     <?php endif; ?>
@@ -56,7 +54,7 @@ require __DIR__ . '/header.php';
 </div>
 
 <div class="card">
-  <a class="btn primary" href="<?php echo base_url('admin/solicitacao.php'); ?>">Ir para Tickets</a>
+  <a class="btn primary" href="<?php echo base_url('admin/request.php'); ?>">Ir para Tickets</a>
   <a class="btn" href="<?php echo base_url('admin/relatorios.php'); ?>">Relatórios</a>
 </div>
 
