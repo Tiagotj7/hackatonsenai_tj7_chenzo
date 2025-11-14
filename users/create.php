@@ -80,7 +80,7 @@ $tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor FROM request_types 
           <textarea name="descricao" required></textarea>
         </div>
         <div class="form-group">
-          <label>Imagem (opcional, até <?php echo MAX_UPLOAD_MB; ?>MB)</label>
+          <label>Imagem (opcional, até <?php echo max_upload_mb(); ?>MB)</label>
           <input type="file" name="imagem" accept="image/*">
         </div>
         <button class="btn primary" type="submit">Enviar Solicitação</button>

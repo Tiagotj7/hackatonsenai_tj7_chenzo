@@ -1,5 +1,6 @@
 <?php
 // admin/header.php
+require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/helpers.php';
 require_once __DIR__ . '/../config/auth.php';
 ?>
@@ -7,13 +8,13 @@ require_once __DIR__ . '/../config/auth.php';
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <title><?php echo isset($pageTitle) ? e($pageTitle) . ' - ' : ''; ?><?php echo APP_NAME; ?></title>
+  <title><?php echo isset($pageTitle) ? e($pageTitle) . ' - ' : ''; ?><?php echo e(app_name()); ?></title>
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
 </head>
 <body>
   <nav class="navbar">
     <div class="container">
-      <h1><?php echo APP_NAME; ?></h1>
+      <h1><?php echo e(app_name()); ?></h1>
       <div class="actions">
         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
           <input type="checkbox" id="darkToggle"> Modo escuro
