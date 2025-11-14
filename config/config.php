@@ -24,7 +24,7 @@ if (file_exists($envFile)) {
 define('DB_HOST', 'sql212.infinityfree.com');
 define('DB_NAME', 'if0_40352073_db_agendeaqui'); // <-- altere para o nome do seu banco local
 define('DB_USER', 'if0_40352073');
-define('DB_PASS', 'your_password_here'); // XAMPP padrão: senha vazia
+define('DB_PASS', 'xldkrDW2IYPMMuH'); // XAMPP padrão: senha vazia
 define('DB_CHARSET', 'utf8mb4');
 
 // Validação mínima
