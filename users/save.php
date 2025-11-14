@@ -4,11 +4,11 @@ require_once __DIR__ . '/../config/helpers.php';
 require_once __DIR__ . '/../config/mailer.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-  redirect('solicitante/nova.php');
+  redirect('users/nova.php');
 }
 verify_csrf();
 
-$nome = trim($_POST['solicitante_nome'] ?? '');
+$nome = trim($_POST['users_nome'] ?? '');
 $matricula = trim($_POST['matricula'] ?? '');
 $cargo = trim($_POST['cargo'] ?? '');
 $curso = trim($_POST['curso'] ?? '');
@@ -41,13 +41,13 @@ if (!empty($_FILES['imagem']['name'])) {
 
 if ($erros) {
   foreach ($erros as $err) flash('error', $err);
-  redirect('solicitante/nova.php');
+  redirect('users/nova.php');
 }
 
 $protocolo = gerar_protocolo($pdo);
 $pdo->beginTransaction();
 try {
-  $sql = "INSERT INTO tickets (protocolo, solicitante_nome, matricula, cargo, curso, local_problema, descricao, tipo_id, setor_id, prioridade, email, status_id, image_path)
+  $sql = "INSERT INTO tickets (protocolo, users_nome, matricula, cargo, curso, local_problema, descricao, tipo_id, setor_id, prioridade, email, status_id, image_path)
           VALUES (:p,:n,:m,:c,:curso,:l,:d,:tipo,:setor,:pri,:e,1,:img)";
   $ins = $pdo->prepare($sql);
   $ins->execute([
@@ -75,9 +75,9 @@ try {
   }
 
   flash('success', "Solicitação criada! Protocolo: $protocolo");
-  redirect('solicitante/minhas.php?matricula=' . urlencode($matricula));
+  redirect('users/minhas.php?matricula=' . urlencode($matricula));
 } catch (Exception $e) {
   $pdo->rollBack();
   flash('error', 'Erro ao salvar: ' . $e->getMessage());
-  redirect('solicitante/nova.php');
+  redirect('users/nova.php');
 }

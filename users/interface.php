@@ -32,11 +32,11 @@ require_once __DIR__ . '/config/helpers.php';
 
     <div class="grid cols-2">
       <div class="card">
-        <h3>Sou Solicitante (Professor/Funcionário)</h3>
+        <h3>Sou users (Professor/Funcionário)</h3>
         <p>Abra um novo chamado ou acompanhe suas solicitações pelo número de matrícula.</p>
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
-          <a class="btn primary" href="<?php echo base_url('solicitante/nova.php'); ?>">Abrir Solicitação</a>
-          <a class="btn" href="<?php echo base_url('solicitante/minhas.php'); ?>">Minhas Solicitações</a>
+          <a class="btn primary" href="<?php echo base_url('users/nova.php'); ?>">Abrir Solicitação</a>
+          <a class="btn" href="<?php echo base_url('users/minhas.php'); ?>">Minhas Solicitações</a>
         </div>
       </div>
       <div class="card">

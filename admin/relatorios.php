@@ -16,7 +16,7 @@ if (isset($_GET['export']) && $_GET['export']=='1') {
   if (!empty($_GET['periodo_fim'])) { $where[]="DATE(t.opened_at)<=:fim"; $params[':fim']=$_GET['periodo_fim']; }
 
   $whereSql = $where ? (' WHERE ' . implode(' AND ', $where)) : '';
-  $sql = "SELECT t.protocolo, t.solicitante_nome, t.matricula, t.cargo, t.curso, t.local_problema,
+  $sql = "SELECT t.protocolo, t.users_nome, t.matricula, t.cargo, t.curso, t.local_problema,
                  rt.nome AS categoria, s.nome AS setor, t.prioridade, ts.nome AS status,
                  t.opened_at, t.updated_at
           FROM tickets t
@@ -30,10 +30,10 @@ if (isset($_GET['export']) && $_GET['export']=='1') {
   header('Content-Type: text/csv; charset=utf-8');
   header('Content-Disposition: attachment; filename=relatorio_chamados.csv');
   $out = fopen('php://output', 'w');
-  fputcsv($out, ['Protocolo','Solicitante','Matrícula','Cargo','Curso','Local','Categoria','Setor','Prioridade','Status','Abertura','Atualização'], ';');
+  fputcsv($out, ['Protocolo','users','Matrícula','Cargo','Curso','Local','Categoria','Setor','Prioridade','Status','Abertura','Atualização'], ';');
   foreach ($rows as $r) {
     fputcsv($out, [
-      $r['protocolo'],$r['solicitante_nome'],$r['matricula'],$r['cargo'],$r['curso'],
+      $r['protocolo'],$r['users_nome'],$r['matricula'],$r['cargo'],$r['curso'],
       $r['local_problema'],$r['categoria'],$r['setor'],$r['prioridade'],$r['status'],
       date('d/m/Y H:i', strtotime($r['opened_at'])),
       date('d/m/Y H:i', strtotime($r['updated_at']))

@@ -5,7 +5,7 @@ require_once __DIR__ . '/../config/helpers.php';
 $protocolo = trim($_GET['protocolo'] ?? '');
 if (!$protocolo) {
   flash('warning','Protocolo não informado.');
-  redirect('solicitante/minhas.php');
+  redirect('users/minhas.php');
 }
 
 $sql = "SELECT t.*, rt.nome AS tipo_nome, s.nome AS setor_nome, ts.nome AS status_nome
@@ -17,7 +17,7 @@ $sql = "SELECT t.*, rt.nome AS tipo_nome, s.nome AS setor_nome, ts.nome AS statu
 $st = $pdo->prepare($sql); $st->execute([':p'=>$protocolo]); $ticket = $st->fetch();
 if (!$ticket) {
   flash('error','Solicitação não encontrada.');
-  redirect('solicitante/minhas.php');
+  redirect('users/minhas.php');
 }
 
 $movs = $pdo->prepare("SELECT tm.*, ua.nome AS admin_nome, ts.nome AS status_nome
@@ -43,7 +43,7 @@ $movs = $movs->fetchAll();
         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
           <input type="checkbox" id="darkToggle"> Modo escuro
         </label>
-        <a class="btn" href="<?php echo base_url('solicitante/minhas.php?matricula='.urlencode($ticket['matricula'])); ?>">Voltar</a>
+        <a class="btn" href="<?php echo base_url('users/minhas.php?matricula='.urlencode($ticket['matricula'])); ?>">Voltar</a>
       </div>
     </div>
   </nav>
@@ -51,7 +51,7 @@ $movs = $movs->fetchAll();
     <div class="grid cols-2">
       <div class="card">
         <h3>Dados da Solicitação</h3>
-        <p><strong>Solicitante:</strong> <?php echo e($ticket['solicitante_nome']); ?> (<?php echo e($ticket['matricula']); ?>)</p>
+        <p><strong>users:</strong> <?php echo e($ticket['users_nome']); ?> (<?php echo e($ticket['matricula']); ?>)</p>
         <p><strong>Cargo:</strong> <?php echo e($ticket['cargo']); ?> <?php if ($ticket['curso']) echo ' | Curso: '.e($ticket['curso']); ?></p>
         <p><strong>Local:</strong> <?php echo e($ticket['local_problema']); ?></p>
         <p><strong>Categoria/Setor:</strong> <?php echo e($ticket['tipo_nome']); ?> / <?php echo e($ticket['setor_nome']); ?></p>
