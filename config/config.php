@@ -9,18 +9,57 @@ if (session_status() !== PHP_SESSION_ACTIVE) {
 define('APP_ENV', env('APP_ENV', 'production'));
 define('APP_NAME', env('APP_NAME', 'Senai Service Manager'));
 
-// DB
-define('DB_HOST', env('DB_HOST', 'sql212.infinityfree.com'));
-define('DB_PORT', (int)env('DB_PORT', 21));
-define('DB_NAME', env('DB_NAME', 'if0_40352073_db_agendeaqui'));
-define('DB_USER', env('DB_USER', 'if0_40352073'));
-define('DB_PASS', env('DB_PASS', 'xldkrDW2IYPMMuH'));
+// Carrega .env simples se existir (opcional)
+$envFile = __DIR__ . '/.env';
+if (file_exists($envFile)) {
+    foreach (file($envFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES) as $line) {
+        if (strpos(trim($line), '#') === 0) continue;
+        [$k, $v] = array_map('trim', explode('=', $line, 2) + [null, null]);
+        if ($k && $v !== null) putenv("$k=$v");
+    }
+}
+
+// Buscar credenciais (prioriza variáveis de ambiente)
+define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
+define('DB_NAME', getenv('DB_NAME') ?: 'database_name');
+define('DB_USER', getenv('DB_USER') ?: 'root');
+define('DB_PASS', getenv('DB_PASS') ?: '');
+define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
+
+// Validação rápida das credenciais
+if (!DB_HOST || !DB_NAME || !DB_USER) {
+    error_log('Config DB inválida: verifique DB_HOST, DB_NAME e DB_USER');
+    // Em produção, não exponha senha — apenas registre/mostre mensagem genérica
+    die('Erro de configuração do banco de dados. Contate o administrador.');
+}
+
+// Criar conexão PDO com tratamento de erro e retry básico para 429/timeout
+$dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET;
+$pdoOptions = [
+    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_PERSISTENT => true, // reuse connection
+];
+
+try {
+    $pdo = new PDO($dsn, DB_USER, DB_PASS, $pdoOptions);
+} catch (PDOException $e) {
+    error_log('Falha ao conectar ao DB: ' . $e->getMessage());
+    die('Não foi possível conectar ao banco de dados. Verifique credenciais e disponibilidade.');
+}
+
+// Função helper para retornar PDO (opcional)
+function db(): PDO
+{
+    global $pdo;
+    return $pdo;
+}
 
 // BASE_URL
 $base = env('BASE_URL', null);
 if (!$base) {
     $https = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')
-          || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
+        || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https');
     $scheme = $https ? 'https' : 'http';
     $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
     $dir = rtrim(dirname($_SERVER['SCRIPT_NAME'] ?? ''), '/\\');
