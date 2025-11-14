@@ -247,9 +247,7 @@ else:
         ?>
           <tr>
             <td class="col-prot"><?php echo e($t['protocolo']); ?></td>
-            <td class="col-user">
-              <?php echo e($t['users_nome']); ?><br><small><?php echo e($t['matricula']); ?></small>
-            </td>
+            <td class="col-user"><?php echo e($t['users_nome']); ?><br><small><?php echo e($t['matricula']); ?></small></td>
             <td class="col-cat"><?php echo e($t['tipo_nome']); ?><br><small><?php echo e($t['setor_nome']); ?></small></td>
             <td class="col-local"><?php echo e($t['local_problema']); ?></td>
             <td class="col-prio"><span class="badge <?php echo $cls; ?>"><?php echo e($t['prioridade']); ?></span></td>
@@ -302,27 +300,13 @@ else:
             <div><small><?php echo e($t['matricula']); ?></small></div>
           </div>
 
+          <!-- Detalhes compactos escondidos se desejar (basta remover se não quiser) -->
           <div class="ticket-meta">
-            <div class="meta-item">
-              <strong>Categoria/Setor</strong>
-              <?php echo e($t['tipo_nome']); ?> / <?php echo e($t['setor_nome']); ?>
-            </div>
-            <div class="meta-item">
-              <strong>Local</strong>
-              <?php echo e($t['local_problema']); ?>
-            </div>
-            <div class="meta-item">
-              <strong>Prioridade</strong>
-              <span class="badge <?php echo $cls; ?>"><?php echo e($t['prioridade']); ?></span>
-            </div>
-            <div class="meta-item">
-              <strong>Abertura</strong>
-              <?php echo e($dtOpen); ?>
-            </div>
-            <div class="meta-item">
-              <strong>Atualização</strong>
-              <?php echo e($dtUpd); ?>
-            </div>
+            <div class="meta-item"><strong>Categoria/Setor</strong><?php echo e($t['tipo_nome']); ?> / <?php echo e($t['setor_nome']); ?></div>
+            <div class="meta-item"><strong>Local</strong><?php echo e($t['local_problema']); ?></div>
+            <div class="meta-item"><strong>Prioridade</strong><span class="badge <?php echo $cls; ?>"><?php echo e($t['prioridade']); ?></span></div>
+            <div class="meta-item"><strong>Abertura</strong><?php echo e($dtOpen); ?></div>
+            <div class="meta-item"><strong>Atualização</strong><?php echo e($dtUpd); ?></div>
           </div>
 
           <div class="ticket-actions">
