@@ -20,10 +20,10 @@ if (file_exists($envFile)) {
 }
 
 // Buscar credenciais (prioriza variáveis de ambiente)
-define('DB_HOST', getenv('DB_HOST') ?: 'sql208.infinityfree.com');
-define('DB_NAME', getenv('DB_NAME') ?: 'if0_40414326_service_manager');
-define('DB_USER', getenv('DB_USER') ?: 'if0_40414326');
-define('DB_PASS', getenv('DB_PASS') ?: 'qpW5Tihl7RY');
+define('DB_HOST', getenv('DB_HOST') ?: 'sql212.infinityfree.com');
+define('DB_NAME', getenv('DB_NAME') ?: 'if0_40352073_db_agendeaqui');
+define('DB_USER', getenv('DB_USER') ?: 'if0_40352073');
+define('DB_PASS', getenv('DB_PASS') ?: 'xldkrDW2IYPMMuH');
 define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
 
 // Validação rápida das credenciais
