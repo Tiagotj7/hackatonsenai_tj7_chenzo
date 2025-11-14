@@ -209,3 +209,66 @@ header {
 @media (max-width: 390px) {
   .chip { padding: 4px 8px; font-size: 11px; }
 }
+
+
+
+/* ===== Tickets (admin/request) - Mobile only cols + Drawer ===== */
+
+/* Esconde colunas no mobile; mantém só Protocolo, Usuário e Ações */
+@media (max-width: 640px) {
+  .tickets-table .col-cat,
+  .tickets-table .col-local,
+  .tickets-table .col-prio,
+  .tickets-table .col-stat,
+  .tickets-table .col-open,
+  .tickets-table .col-upd {
+    display: none;
+  }
+  .tickets-table th, .tickets-table td { font-size: 13px; padding: 10px; }
+  .tickets-table .col-actions { width: 150px; }
+  .table-responsive { overflow-x: hidden; }
+}
+
+/* Drawer de detalhes (direita) */
+.ticket-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.35);
+  opacity: 0; visibility: hidden;
+  transition: .2s ease; z-index: 98;
+}
+.ticket-backdrop.open { opacity: 1; visibility: visible; }
+
+.ticket-drawer {
+  position: fixed; top: 0; right: 0; height: 100%;
+  width: 420px; max-width: 92vw;
+  background: var(--card); color: var(--text);
+  border-left: 1px solid var(--border);
+  transform: translateX(100%);
+  transition: transform .22s ease;
+  z-index: 99; display: flex; flex-direction: column;
+  box-shadow: var(--shadow-lg);
+}
+.ticket-drawer.open { transform: translateX(0); }
+
+.ticket-drawer__header {
+  padding: 14px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+}
+.ticket-drawer__title { font-weight: 800; font-size: 16px; margin: 0; }
+.ticket-drawer__close {
+  appearance: none; border: 1px solid var(--border);
+  background: var(--card); color: var(--text);
+  border-radius: 8px; width: 36px; height: 36px; cursor: pointer;
+}
+.ticket-drawer__body { padding: 12px; overflow: auto; display: grid; gap: 12px; }
+.ticket-field { display: grid; gap: 4px; }
+.ticket-field label { color: var(--muted); font-size: 12px; }
+.ticket-actions { margin-top: 6px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+@media (max-width: 420px) {
+  .ticket-drawer { width: 360px; max-width: 94vw; }
+}
+
+/* Dark refinements */
+.dark .ticket-drawer { background: var(--card); border-left-color: var(--border); }
+.dark .ticket-drawer__close { background: var(--card); border-color: var(--border); color: var(--text); }
