@@ -40,12 +40,12 @@
 }
 
 .dark {
-  --bg: #020917;
-  --bg-soft: #020d26;
-  --card: #071024;
-  --card-2: #09152b;
+  --bg: #030c1d;
+  --bg-soft: #0c172f;
+  --card: #0c1a39;
+  --card-2: #0d1e3d;
   --text: #e6edf7;
-  --muted: #9aa7bd;
+  --muted: #cadcfb;
 
   --primary: #4f8cff;
   --success: #2dd4bf;
