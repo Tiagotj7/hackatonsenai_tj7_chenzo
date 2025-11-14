@@ -28,7 +28,7 @@ require_once __DIR__ . '/../config/auth.php';
           <a class="btn" href="<?php echo base_url('admin/relatorios.php'); ?>">Relatórios</a>
           <a class="btn danger" href="<?php echo base_url('admin/logout.php'); ?>">Sair</a>
         <?php else: ?>
-          <a class="btn" href="<?php echo base_url('admin/login.php'); ?>">Login</a>
+          <a class="btn" href="<?php echo base_url('admin/login.php'); ?>">Voltar</a>
         <?php endif; ?>
       </div>
     </div>
