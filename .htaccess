@@ -8,9 +8,19 @@ RewriteEngine On
 RewriteCond %{HTTPS} !=on
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Bloqueia acesso direto a pastas internas
+# Bloqueia acesso web às pastas internas
 RewriteRule ^config/ - [F,L]
 RewriteRule ^db/ - [F,L]
+
+# Cabeçalhos de segurança (ajuste CSP conforme seus CDNs)
+<IfModule mod_headers.c>
+  Header set X-Content-Type-Options "nosniff"
+  Header set X-Frame-Options "SAMEORIGIN"
+  Header set Referrer-Policy "strict-origin-when-cross-origin"
+  Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+  # Se usa Chart.js via CDN, adicione os domínios que usa:
+  Header set Content-Security-Policy "default-src 'self'; img-src 'self' data: https:; script-src 'self' https://cdn.jsdelivr.net https://cdn.jsdelivr.net/npm/chart.js; style-src 'self' 'unsafe-inline'; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
+</IfModule>
 
 # Evita listagem de diretórios
 Options -Indexes
