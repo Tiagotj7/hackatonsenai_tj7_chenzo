@@ -20,10 +20,8 @@ header {
   }
 }
 
-
 main {
-  padding: 2rem;
-/* hero */
+  /* hero */
   .hero {
     .container {
       display: grid;
@@ -42,17 +40,11 @@ main {
           max-width: 30rem;
           margin: auto;
         }
-        h2 {
-          font-size: 1.2rem;
-          margin-top: 1rem;
-          margin-bottom: 0;
-        }
         .lead {
           line-height: 1.1rem;
         }
 
         .links {
-
           max-width: 20rem;
           display: grid;
           grid-template-columns: repeat(2, 1fr);
@@ -60,7 +52,6 @@ main {
           align-items: center;
           gap: 1rem;
           margin: 0.8rem auto auto;
-
 
           a {
             max-width: 9rem;
@@ -83,8 +74,11 @@ main {
     }
     /* glass */
     .glass {
+      width: 100%;
       display: grid;
       grid-column: 1fr;
+      justify-items: center;
+      padding: 1.3rem;
 
       .feature {
         padding: 1rem;
@@ -95,7 +89,9 @@ main {
         margin-bottom: 1.3rem;
         border-radius: 1rem;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 20rem;
         max-width: 22rem;
+
         .icon-circle {
           border-radius: 50%;
           padding: 0.4rem;
@@ -109,7 +105,7 @@ main {
       }
     }
   }
-/* Card */
+  /* Card */
   .card {
     margin-top: 2rem;
     padding: 1.5rem;
@@ -131,7 +127,6 @@ main {
         display: flex;
         flex-direction: column;
         align-items: center;
-
       }
     }
   }
@@ -153,29 +148,40 @@ footer {
 /* Desktop */
 @media screen and (min-width: 768px) {
   header {
-    .container{
+    .container {
       display: flex;
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
     }
   }
-  .links{
+  .links {
     width: 25rem;
-    gap: 4rem;
-     a {
+    gap: 4rem 2rem;
+    a {
       width: 12rem;
-     }
+    }
   }
 
-   .glass {
-    display: grid;
+  .glass {
     grid-template-columns: repeat(2, 1fr);
-
+    height: 60dvh;
+    padding: 5rem;
     .feature {
-      justify-self: center;
       width: 22rem;
+      justify-self: center;
+      align-self: center;
     }
+  }
+}
 
-   }
+@media screen and (min-width: 1024px) {
+  .glass {
+    display: grid;
+    justify-self: center;
+    grid-template-columns: repeat(3, 1fr);
+    .feature {
+      width: 27rem;
+    }
+  }
 }

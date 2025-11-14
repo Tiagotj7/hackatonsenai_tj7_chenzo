@@ -6,7 +6,7 @@
 /* 1) Tokens de Design (Cores, Raio, Shadow, Spacing) */
 :root {
   /* Cores base (claro) */
-  --bg: #f6f8fb;
+  --bg: linear-gradient(90deg, #2563eb, #06b6d4);
   --bg-soft: #eef2f8;
   --card: #ffffff;
   --card-2: #fdfefe;
@@ -19,6 +19,7 @@
   --danger: #ef4444; /* Vermelho */
   --warning: #f59e0b; /* Amarelo */
   --info: #0ea5e9; /* Ciano */
+  --white: #ffffff;
   --gradient: linear-gradient(90deg, #2563eb, #06b6d4);
 
   /* Bordas e linhas */
@@ -76,8 +77,26 @@ html {
 body {
   font-family: Inter, system-ui, sans-serif;
   color: var(--text);
-  background: var(--bg);
+  background: var(--white);
   line-height: 1.55;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+a {
+  color: var(--white);
+}
+main a {
+  background: var(--gradient);
+}
+
+header {
+  background: var(--gradient);
+  color: var(--white);
+}
+
+.glass {
+  background: var(--gradient);
+  .feature {
+    background: var(--white);
+  }
 }
