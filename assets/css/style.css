@@ -212,3 +212,64 @@ header {
 
 
 
+/* ===== Tickets (admin/request) — Compactação Mobile ===== */
+
+/* Base da tabela de tickets */
+.tickets-table { table-layout: fixed; width: 100%; }
+.tickets-table th, .tickets-table td { vertical-align: top; }
+
+/* Larguras (desktop) */
+.tickets-table .col-prot   { width: 14rem; }     /* Protocolo */
+.tickets-table .col-user   { width: auto; }      /* Usuário/Matrícula */
+.tickets-table .col-cat    { width: 14rem; }
+.tickets-table .col-local  { width: 12rem; }
+.tickets-table .col-prio   { width: 8rem; }
+.tickets-table .col-stat   { width: 10rem; }
+.tickets-table .col-open   { width: 11rem; }
+.tickets-table .col-upd    { width: 11rem; }
+.tickets-table .col-actions{ width: 16rem; }
+
+/* Compactação e colunas mínimas no mobile */
+@media (max-width: 640px) {
+  /* só 3 colunas visíveis */
+  .tickets-table .col-cat,
+  .tickets-table .col-local,
+  .tickets-table .col-prio,
+  .tickets-table .col-stat,
+  .tickets-table .col-open,
+  .tickets-table .col-upd { display: none; }
+
+  /* ajuste de fonte e padding */
+  .tickets-table th, .tickets-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+    line-height: 1.35;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+  }
+
+  /* largura das 3 colunas principais */
+  .tickets-table .col-prot   { width: 38%; }
+  .tickets-table .col-user   { width: auto; }
+  .tickets-table .col-actions{ width: 105px; text-align: right; }
+
+  /* evita scroll horizontal */
+  .table-responsive { overflow-x: hidden; }
+
+  /* botões menores */
+  .tickets-table .btn { height: 30px; padding: 0 8px; font-size: 12px; }
+  .tickets-table .btn.success { padding: 0 8px; }
+
+  /* Ícones no mobile (substitui texto por ícone via data-ico) */
+  .tickets-table .btn[data-ico] { font-size: 0; padding: 0 8px; }
+  .tickets-table .btn[data-ico]::before {
+    font-size: 16px; line-height: 1; display: inline-block;
+  }
+  .tickets-table .btn[data-ico="ver"]::before { content: "👁"; }
+  .tickets-table .btn[data-ico="and"]::before { content: "🔄"; }
+  .tickets-table .btn[data-ico="ok"]::before  { content: "✅"; }
+}
+
+/* Dark: mantém contraste */
+.dark .tickets-table { color: var(--text); }
+.dark .tickets-table th { color: var(--muted); }

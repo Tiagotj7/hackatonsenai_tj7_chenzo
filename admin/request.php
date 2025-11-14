@@ -189,21 +189,73 @@ if (isset($_GET['id'])):
     <?php if (!$movs): ?>
       <p>Sem histórico.</p>
     <?php else: ?>
-      <div class="table-responsive">
-        <table class="table">
-          <thead><tr><th>Data</th><th>Status</th><th>Responsável</th><th>Resposta</th></tr></thead>
-          <tbody>
-            <?php foreach ($movs as $m): ?>
-              <tr>
-                <td><?php echo e(date('d/m/Y H:i', strtotime($m['created_at']))); ?></td>
-                <td><?php echo e($m['status_nome']); ?></td>
-                <td><?php echo e($m['admin_nome'] ?: '-'); ?></td>
-                <td><?php echo nl2br(e($m['resposta'])); ?></td>
-              </tr>
-            <?php endforeach; ?>
-          </tbody>
-        </table>
-      </div>
+<div class="table-responsive">
+  <table class="table tickets-table">
+    <thead>
+      <tr>
+        <th class="col-prot">Protocolo</th>
+        <th class="col-user">Usuário/Matrícula</th>
+        <th class="col-cat">Categoria/Setor</th>
+        <th class="col-local">Local</th>
+        <th class="col-prio">Prioridade</th>
+        <th class="col-stat">Status</th>
+        <th class="col-open">Abertura</th>
+        <th class="col-upd">Atualização</th>
+        <th class="col-actions">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (!$tickets): ?>
+        <tr><td colspan="9">Nenhum registro.</td></tr>
+      <?php else: foreach ($tickets as $t):
+        $p = strtolower($t['prioridade']);
+        $cls = $p==='urgente'?'urgente':($p==='média'?'media':'baixa');
+        $dtOpen = date('d/m/Y H:i', strtotime($t['opened_at']));
+        $dtUpd  = date('d/m/Y H:i', strtotime($t['updated_at']));
+      ?>
+        <tr>
+          <td class="col-prot"><?php echo e($t['protocolo']); ?></td>
+          <td class="col-user">
+            <?php echo e($t['users_nome']); ?><br>
+            <small><?php echo e($t['matricula']); ?></small>
+          </td>
+          <td class="col-cat"><?php echo e($t['tipo_nome']); ?><br><small><?php echo e($t['setor_nome']); ?></small></td>
+          <td class="col-local"><?php echo e($t['local_problema']); ?></td>
+          <td class="col-prio"><span class="badge <?php echo $cls; ?>"><?php echo e($t['prioridade']); ?></span></td>
+          <td class="col-stat"><?php echo e($t['status_nome']); ?></td>
+          <td class="col-open"><?php echo e($dtOpen); ?></td>
+          <td class="col-upd"><?php echo e($dtUpd); ?></td>
+          <td class="col-actions">
+            <div style="display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;">
+              <a class="btn" data-ico="ver" title="Ver"
+                 href="<?php echo base_url('admin/request.php?id='.(int)$t['id']); ?>">
+                Ver
+              </a>
+              <form method="post" style="display:inline;">
+                <input type="hidden" name="csrf" value="<?php echo csrf_token(); ?>">
+                <input type="hidden" name="quick_update" value="1">
+                <input type="hidden" name="id" value="<?php echo (int)$t['id']; ?>">
+                <input type="hidden" name="status_id" value="2">
+                <button class="btn" data-ico="and" title="Marcar como Em andamento" type="submit">
+                  Em andamento
+                </button>
+              </form>
+              <form method="post" style="display:inline;">
+                <input type="hidden" name="csrf" value="<?php echo csrf_token(); ?>">
+                <input type="hidden" name="quick_update" value="1">
+                <input type="hidden" name="id" value="<?php echo (int)$t['id']; ?>">
+                <input type="hidden" name="status_id" value="3">
+                <button class="btn success" data-ico="ok" title="Concluir" type="submit">
+                  Concluir
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      <?php endforeach; endif; ?>
+    </tbody>
+  </table>
+</div>
     <?php endif; ?>
   </div>
 <?php
