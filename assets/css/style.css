@@ -103,94 +103,109 @@ header {
 
 
 
-/* ====== Mapa por Setor (Mobile + Dark) ====== */
-.table-compact th, .table-compact td {
-  padding: 8px 10px;
-  font-size: 13px;
+/* ====== Mapa por Setor como lista (estilo sidebar) ====== */
+.sector-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
-.table-responsive {
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Ajustes finos de contraste no dark */
-.dark .table.mobile-map tr {
+.sector-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
   background: var(--card);
-  border-color: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
   box-shadow: var(--shadow-sm);
 }
-.dark .table.mobile-map td + td {
-  border-top-color: var(--border);
+
+.sector-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(37,99,235,.15);
+  color: var(--primary);
+  font-weight: 800;
+  flex: 0 0 auto;
 }
 
-/* Mobile: até 480px vira "cards" empilhados e sem overflow horizontal */
-@media (max-width: 480px) {
-  html, body { overflow-x: hidden; }
-  .container { overflow-x: hidden; }
-  .card { padding: 12px; }
-
-  .table.mobile-map {
-    width: 100%;
-    display: block;
-    border: 0;
-  }
-  .table.mobile-map thead { display: none; }
-  .table.mobile-map tbody { display: block; margin: 0; padding: 0; }
-
-  .table.mobile-map tr {
-    display: block;
-    width: 100%;
-    margin: 10px 0;
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-sm);
-  }
-
-  /* Cada célula vira linha com rótulo e valor lado a lado */
-  .table.mobile-map td {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 10px 12px;
-    border: 0;
-    overflow-wrap: anywhere;
-    word-break: break-word;
-  }
-  .table.mobile-map td + td {
-    border-top: 1px dashed var(--border);
-  }
-
-  /* Rótulos por coluna (antes do valor) */
-  .table.mobile-map td::before {
-    color: var(--muted);
-    font-weight: 600;
-    flex: 0 0 46%;
-    max-width: 46%;
-    text-align: left;
-    content: '';
-  }
-  .table.mobile-map td:nth-child(1)::before { content: 'Setor'; }
-  .table.mobile-map td:nth-child(2)::before { content: 'Abertas'; }
-  .table.mobile-map td:nth-child(3)::before { content: 'Em andamento'; }
-  .table.mobile-map td:nth-child(4)::before { content: 'Concluídas'; }
-  .table.mobile-map td:nth-child(5)::before { content: 'Total'; }
-
-  /* Valor ocupa o restante, alinhado à direita */
-  .table.mobile-map td > * {
-    flex: 1 1 54%;
-    text-align: right;
-  }
-
-  /* Destaque do total */
-  .table.mobile-map td:last-child strong {
-    font-size: 15px;
-  }
+.sector-body {
+  min-width: 0;
+  flex: 1 1 auto;
 }
 
-/* Extra estreito: encurta rótulos longos para caber melhor */
+.sector-title {
+  font-weight: 800;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sector-subtitle {
+  color: var(--muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.sector-progress {
+  margin-top: 8px;
+  height: 8px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg-soft);
+  overflow: hidden;
+}
+.sector-progress .part {
+  height: 100%;
+  display: block;
+  float: left;
+}
+.sector-progress .part.warn { background: var(--warning); }
+.sector-progress .part.info { background: var(--info); }
+.sector-progress .part.succ { background: var(--success); }
+
+.sector-kpis {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-soft);
+  white-space: nowrap;
+}
+.chip.warn { background: rgba(245,158,11,.15); color: #805b10; border-color: rgba(245,158,11,.35); }
+.chip.info { background: rgba(14,165,233,.15); color: #0b3f86; border-color: rgba(14,165,233,.35); }
+.chip.succ { background: rgba(16,185,129,.15); color: #065f46; border-color: rgba(16,185,129,.35); }
+.chip.total { background: rgba(37,99,235,.12); color: #0b4f7d; border-color: rgba(37,99,235,.3); }
+
+/* Dark refinements */
+.dark .sector-item { background: var(--card); border-color: var(--border); box-shadow: var(--shadow-sm); }
+.dark .chip.warn { color: #d8b15c; }
+.dark .chip.info { color: #7fb8f5; }
+.dark .chip.succ { color: #8be6d8; }
+.dark .chip.total { color: #b9cffb; }
+
+/* Responsivo */
+@media (max-width: 620px) {
+  .sector-item { flex-direction: column; align-items: flex-start; }
+  .sector-kpis { width: 100%; justify-content: flex-start; }
+  .sector-title { white-space: normal; }
+}
 @media (max-width: 390px) {
-  .table.mobile-map td:nth-child(3)::before { content: 'Andamento'; }
-  .table.mobile-map td:nth-child(4)::before { content: 'Concl.'; }
+  .chip { padding: 4px 8px; font-size: 11px; }
 }

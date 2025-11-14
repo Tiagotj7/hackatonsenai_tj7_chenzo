@@ -111,34 +111,39 @@ require __DIR__ . '/header.php';
   </div>
 </div>
 
+<!-- Mapa por Setor (estilo sidebar responsivo) -->
 <div class="card">
   <h3>Mapa por Setor</h3>
   <?php if (!$setorResumo): ?>
     <p>Nenhum dado.</p>
   <?php else: ?>
-    <div class="table-responsive">
-      <table class="table mobile-map table-compact">
-        <thead>
-          <tr>
-            <th>Setor</th>
-            <th>Abertas</th>
-            <th>Em andamento</th>
-            <th>Concluídas</th>
-            <th>Total</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php foreach ($setorResumo as $row): ?>
-            <tr>
-              <td><?php echo e($row['setor']); ?></td>
-              <td><?php echo (int)$row['abertas']; ?></td>
-              <td><?php echo (int)$row['andamento']; ?></td>
-              <td><?php echo (int)$row['concluidas']; ?></td>
-              <td><strong><?php echo (int)$row['total']; ?></strong></td>
-            </tr>
-          <?php endforeach; ?>
-        </tbody>
-      </table>
+    <div class="sector-list">
+      <?php foreach ($setorResumo as $row): 
+        $tot = max(1, (int)$row['total']);
+        $wa = (int)round($row['abertas']   * 100 / $tot);
+        $wi = (int)round($row['andamento'] * 100 / $tot);
+        $wc = max(0, 100 - $wa - $wi); // garante fechar em 100%
+        $letter = strtoupper(mb_substr($row['setor'], 0, 1, 'UTF-8'));
+      ?>
+        <div class="sector-item">
+          <div class="sector-icon"><?php echo e($letter); ?></div>
+          <div class="sector-body">
+            <div class="sector-title"><?php echo e($row['setor']); ?></div>
+            <div class="sector-subtitle"><?php echo (int)$row['total']; ?> no total</div>
+            <div class="sector-progress">
+              <span class="part warn" style="width: <?php echo $wa; ?>%"></span>
+              <span class="part info" style="width: <?php echo $wi; ?>%"></span>
+              <span class="part succ" style="width: <?php echo $wc; ?>%"></span>
+            </div>
+          </div>
+          <div class="sector-kpis">
+            <span class="chip warn"><?php echo (int)$row['abertas']; ?> Abertas</span>
+            <span class="chip info"><?php echo (int)$row['andamento']; ?> Andam.</span>
+            <span class="chip succ"><?php echo (int)$row['concluidas']; ?> Concl.</span>
+            <span class="chip total"><strong><?php echo (int)$row['total']; ?></strong> Total</span>
+          </div>
+        </div>
+      <?php endforeach; ?>
     </div>
   <?php endif; ?>
 </div>
