@@ -40,7 +40,7 @@ $APP = function_exists('app_name') ? app_name() : (defined('APP_NAME') ? APP_NAM
                     <div class="cta">
                         <a class="btn primary" href="<?php echo base_url('users/create.php'); ?>">Abrir Solicitação</a>
                         <a class="btn outline primary" href="<?php echo base_url('users/myrequest.php'); ?>">Acompanhar Minhas</a>
-                        <a class="btn success" href="<?php echo base_url('admin/login.php'); ?>">Entrar no Painel</a>
+                        <a class="btn success" href="<?php echo base_url('users/interface.php'); ?>">Entrar no Painel</a>
                     </div>
                     <div class="mini-muted" style="margin-top:8px;">Sem cadastro para users • Use matrícula para acompanhar</div>
                 </div>
