@@ -1,33 +1,40 @@
-# SENAI Chamados (PHP + MySQL)
+# Senai Service Manager
 
-Sistema web para gerenciamento de solicitações internas (TI/Manutenção).
+Sistema web para gerenciamento de solicitações internas (TI/Manutenção) do SENAI.
 
 ## Requisitos
-- PHP 8+
-- MySQL 5.7+ / 8.0
-- Apache (.htaccess habilitado)
-- InfinityFree (opcional, para deploy)
+- PHP 8+ (InfinityFree OK)
+- MySQL (InfinityFree) + phpMyAdmin
+- Apache com .htaccess habilitado
 
-## Instalação local
-1. Crie o banco via phpMyAdmin importando `db/database.sql`.
-2. Copie `.env` (exemplo no README) e configure `BASE_URL` e MySQL.
-3. Dê permissão de escrita à pasta `uploads/`.
-4. Acesse `http://localhost/sua-pasta/index.php`.
-5. Admin: `admin/login.php` → se não houver usuário, use "Criar admin padrão".
-
-## Deploy InfinityFree
-1. Crie o banco e anote host/usuário/senha.
-2. Suba os arquivos para `htdocs/`.
-3. Edite `.env` com `BASE_URL` e credenciais de banco.
-4. Importe `db/database.sql` no phpMyAdmin do InfinityFree.
-5. Acesse o domínio.
+## Instalação no InfinityFree
+1. Crie um banco em MySQL Databases e anote:
+   - DB Host (ex.: sql201.epizy.com)
+   - DB Name (ex.: epiz_12345678_senai)
+   - DB User (ex.: epiz_12345678)
+   - DB Pass
+2. Acesse phpMyAdmin e importe `db/database.sql`.
+3. Envie todos os arquivos para `htdocs/` via FTP.
+4. Crie e edite o arquivo `.env` na raiz (htdocs) com suas credenciais:
+   - APP_NAME="Senai Service Manager"
+   - BASE_URL="https://seu-dominio.epizy.com"
+   - DB_HOST/DB_NAME/DB_USER/DB_PASS
+5. Garanta que a pasta `uploads/` existe em `htdocs/` e tem permissão de escrita.
+6. Acesse:
+   - Público: https://seu-dominio.epizy.com/index.php
+   - Admin: https://seu-dominio.epizy.com/admin/login.php
+   - Na primeira vez, clique em "Criar admin padrão" (admin/admin123) e depois altere a senha.
 
 ## Recursos
-- Solicitante (abrir, listar por matrícula, detailss, upload).
-- Admin (login, dashboard, filtros, histórico, atualização de status).
-- CSV export, dark mode, CSRF, prepared statements.
+- Abertura de solicitação (upload de imagem, prioridade, categoria).
+- Acompanhamento por matrícula (status, histórico, datas).
+- Painel admin com filtros, atualização de status, histórico de movimentações.
+- Dashboard com KPIs e distribuição por prioridade.
+- Exportação CSV.
+- Dark mode.
+- Segurança: .env, .htaccess, CSRF, prepared statements.
 
-## Segurança
-- Credenciais via `.env`.
-- `.htaccess` bloqueando `config/`, `db/` e `.env`.
-- CSRF token em POST.
+## Observações InfinityFree
+- E-mails: geralmente `mail()` não funciona no plano free. Deixe `EMAIL_ENABLED=false` no `.env`.
+- O host do MySQL não é `localhost`. Use o host fornecido (sqlXXX.epizy.com).
+- Se o upload falhar por restrição do host, tente reduzir `MAX_UPLOAD_MB` no `.env`.
