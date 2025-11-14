@@ -163,11 +163,6 @@ $APP = function_exists('app_name') ? app_name() : (defined('APP_NAME') ? APP_NAM
 
     <footer class="footer">
         <div>© <?php echo date('Y'); ?> <?php echo e($APP); ?> — SENAI</div>
-        <div class="footer-links">
-            <a href="<?php echo base_url('users/create.php'); ?>">Abrir Solicitação</a>
-            <a href="<?php echo base_url('users/myrequest.php'); ?>">Minhas Solicitações</a>
-            <a href="<?php echo base_url('admin/login.php'); ?>">Acesso Admin</a>
-        </div>
     </footer>
 
     <script src="<?php echo base_url('assets/js/app.js'); ?>"></script>
