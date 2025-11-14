@@ -10,10 +10,10 @@ $tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor FROM request_types 
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
   <title>Abrir Solicitação - <?php echo e(app_name()); ?></title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+  <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
 </head>
 <body>
   <header class="navbar">
