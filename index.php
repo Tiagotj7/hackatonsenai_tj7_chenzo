@@ -10,7 +10,100 @@ require_once __DIR__ . '/config/helpers.php';
   <meta name="robots" content="noindex,nofollow">
   <title><?php echo e(app_name()); ?> - Sistema de Chamados Internos</title>
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
+  <style>
+    /* Complemento visual exclusivo desta página */
+    .hero {
+      position: relative;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(13,110,253,.15), transparent 60%),
+                  radial-gradient(800px 400px at 90% 20%, rgba(25,135,84,.12), transparent 60%),
+                  linear-gradient(180deg, var(--bg) 0%, var(--card) 100%);
+      padding: 52px 0 36px;
+      overflow: hidden;
+    }
+    .hero .container {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 24px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .hero .container { grid-template-columns: 1fr; }
+    }
+    .pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 10px; border: 1px dashed var(--border);
+      background: rgba(13,110,253,.08); color: var(--primary);
+      border-radius: 999px; font-size: 12px; font-weight: 600;
+    }
+    .hero h1 {
+      font-size: clamp(28px, 4vw, 44px);
+      line-height: 1.15; margin: 10px 0 8px;
+    }
+    .hero p.lead {
+      color: var(--muted);
+      font-size: clamp(14px, 2.2vw, 18px);
+      margin: 0 0 18px;
+    }
+    .hero .cta { display: flex; gap: 10px; flex-wrap: wrap; }
+    .glass {
+      background: rgba(255,255,255,.5);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(6px);
+      border-radius: 14px;
+      padding: 14px;
+    }
+    .dark .glass { background: rgba(23,25,35,.35); }
 
+    .i-grid { display: grid; gap: 16px; }
+    .i-grid.cols-3 { grid-template-columns: repeat(3,1fr); }
+    @media (max-width: 900px) { .i-grid.cols-3 { grid-template-columns: 1fr; } }
+
+    .feature {
+      display: flex; gap: 12px; align-items: flex-start;
+      border: 1px solid var(--border); border-radius: 12px; padding: 14px;
+      background: var(--card);
+    }
+    .icon-circle {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: grid; place-items: center;
+      background: rgba(13,110,253,.12); color: var(--primary);
+      flex: 0 0 40px;
+    }
+    .feature h4 { margin: 2px 0 4px; font-size: 16px; }
+    .feature p { margin: 0; color: var(--muted); font-size: 14px; }
+
+    .steps { position: relative; }
+    .steps .lane {
+      position: absolute; left: 20px; top: 0; bottom: 0;
+      width: 2px; background: var(--border);
+    }
+    .step {
+      display: grid; grid-template-columns: 40px 1fr; gap: 12px;
+      align-items: start; margin-bottom: 14px;
+    }
+    .step .num {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--primary); color: #fff; font-weight: 700;
+      display: grid; place-items: center; border: 2px solid rgba(255,255,255,.6);
+      box-shadow: 0 6px 20px rgba(13,110,253,.3);
+      z-index: 1;
+    }
+    .step .body h5 { margin: 2px 0 4px; }
+    .step .body p { margin: 0; color: var(--muted); }
+
+    .quick {
+      display: grid; gap: 16px; grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 900px) { .quick { grid-template-columns: 1fr; } }
+    .quick .card h3 { margin-top: 0; }
+
+    .mini-muted { color: var(--muted); font-size: 12px; }
+
+    .footer-links {
+      display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
   <header class="navbar">
