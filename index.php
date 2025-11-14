@@ -10,8 +10,8 @@ $APP = function_exists('app_name') ? app_name() : (defined('APP_NAME') ? APP_NAM
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <meta name="robots" content="noindex,nofollow" />
     <title>Senai Service Manager</title>
-    <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="stylesheet" href="/assets/css/index.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
     <link rel="shortcut icon" href="<?php echo base_url('assets/images/favicon.ico'); ?>" type="image/x-icon">
 
   </head>
