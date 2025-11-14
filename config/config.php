@@ -19,18 +19,18 @@ if (file_exists($envFile)) {
     }
 }
 
-// Buscar credenciais (prioriza variáveis de ambiente)
-define('DB_HOST', getenv('DB_HOST') ?: 'sql212.infinityfree.com');
-define('DB_NAME', getenv('DB_NAME') ?: 'if0_40352073_db_agendeaqui');
-define('DB_USER', getenv('DB_USER') ?: 'if0_40352073');
-define('DB_PASS', getenv('DB_PASS') ?: 'xldkrDW2IYPMMuH');
-define('DB_CHARSET', getenv('DB_CHARSET') ?: 'utf8mb4');
+// Config visível para uso local com XAMPP
+// Ajuste estes valores conforme seu ambiente local
+define('DB_HOST', '127.0.0.1');
+define('DB_NAME', 'senai_service'); // <-- altere para o nome do seu banco local
+define('DB_USER', 'root');
+define('DB_PASS', ''); // XAMPP padrão: senha vazia
+define('DB_CHARSET', 'utf8mb4');
 
-// Validação rápida das credenciais
+// Validação mínima
 if (!DB_HOST || !DB_NAME || !DB_USER) {
-    error_log('Config DB inválida: verifique DB_HOST, DB_NAME e DB_USER');
-    // Em produção, não exponha senha — apenas registre/mostre mensagem genérica
-    die('Erro de configuração do banco de dados. Contate o administrador.');
+    error_log('Configuração do DB incorreta em config/config.php');
+    die('Erro de configuração do banco de dados. Verifique config/config.php.');
 }
 
 // Criar conexão PDO com tratamento de erro e retry básico para 429/timeout
@@ -38,14 +38,14 @@ $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET
 $pdoOptions = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_PERSISTENT => true, // reuse connection
+    PDO::ATTR_PERSISTENT => false,
 ];
 
 try {
     $pdo = new PDO($dsn, DB_USER, DB_PASS, $pdoOptions);
 } catch (PDOException $e) {
     error_log('Falha ao conectar ao DB: ' . $e->getMessage());
-    die('Não foi possível conectar ao banco de dados. Verifique credenciais e disponibilidade.');
+    die('Não foi possível conectar ao banco de dados. Verifique config/config.php.');
 }
 
 // Função helper para retornar PDO (opcional)
