@@ -5,14 +5,14 @@ require_once __DIR__ . '/../config/helpers.php';
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <title><?php echo e(app_name()); ?> - Área do Solicitante</title>
+  <title><?php echo e(app_name()); ?> - Área do users</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <link rel="stylesheet" href="<?php echo base_url('assets/css/style.css'); ?>">
 </head>
 <body>
   <header class="navbar">
     <div class="container">
-      <h1>Área do Solicitante</h1>
+      <h1>Área do users</h1>
       <div class="actions">
         <label style="display:flex;align-items:center;gap:6px;cursor:pointer;"><input type="checkbox" id="darkToggle"> Modo escuro</label>
         <a class="btn" href="<?php echo base_url('index.php'); ?>">Início</a>

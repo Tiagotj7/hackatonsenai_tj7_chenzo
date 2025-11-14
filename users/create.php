@@ -31,7 +31,7 @@ $tipos = $pdo->query("SELECT rt.id, rt.nome, s.nome AS setor FROM request_types 
       <form method="post" action="<?php echo base_url('users/save.php'); ?>" enctype="multipart/form-data" novalidate>
         <input type="hidden" name="csrf" value="<?php echo csrf_token(); ?>">
         <div class="grid cols-2">
-          <div class="form-group"><label>Nome do solicitante</label><input type="text" name="solicitante_nome" required></div>
+          <div class="form-group"><label>Nome do users</label><input type="text" name="users_nome" required></div>
           <div class="form-group"><label>Matrícula</label><input type="text" name="matricula" required></div>
           <div class="form-group"><label>Cargo</label><input type="text" name="cargo" placeholder="Professor, Técnico, Funcionário..." required></div>
           <div class="form-group"><label>Curso (se aplicável)</label><input type="text" name="curso" placeholder="Ex.: Eletromecânica"></div>

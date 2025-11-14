@@ -77,7 +77,7 @@ if (isset($_GET['id'])):
   <div class="grid cols-2">
     <div class="card">
       <h3>Ticket <?php echo e($ticket['protocolo']); ?></h3>
-      <p><strong>Solicitante:</strong> <?php echo e($ticket['solicitante_nome']); ?> (<?php echo e($ticket['matricula']); ?>)</p>
+      <p><strong>users:</strong> <?php echo e($ticket['users_nome']); ?> (<?php echo e($ticket['matricula']); ?>)</p>
       <p><strong>Cargo/Curso:</strong> <?php echo e($ticket['cargo']); ?> <?php if ($ticket['curso']) echo ' | ' . e($ticket['curso']); ?></p>
       <p><strong>Local:</strong> <?php echo e($ticket['local_problema']); ?></p>
       <p><strong>Categoria/Setor:</strong> <?php echo e($ticket['tipo_nome']); ?> / <?php echo e($ticket['setor_nome']); ?></p>
@@ -194,7 +194,7 @@ else:
     <div class="table-responsive">
       <table class="table">
         <thead><tr>
-          <th>Protocolo</th><th>Solicitante</th><th>Categoria/Setor</th><th>Local</th>
+          <th>Protocolo</th><th>users</th><th>Categoria/Setor</th><th>Local</th>
           <th>Prioridade</th><th>Status</th><th>Abertura</th><th>Atualização</th><th></th>
         </tr></thead>
         <tbody>
@@ -204,7 +204,7 @@ else:
           $p=strtolower($t['prioridade']); $cls=$p==='urgente'?'urgente':($p==='média'?'media':'baixa'); ?>
           <tr>
             <td><?php echo e($t['protocolo']); ?></td>
-            <td><?php echo e($t['solicitante_nome']); ?><br><small><?php echo e($t['matricula']); ?></small></td>
+            <td><?php echo e($t['users_nome']); ?><br><small><?php echo e($t['matricula']); ?></small></td>
             <td><?php echo e($t['tipo_nome']); ?><br><small><?php echo e($t['setor_nome']); ?></small></td>
             <td><?php echo e($t['local_problema']); ?></td>
             <td><span class="badge <?php echo $cls; ?>"><?php echo e($t['prioridade']); ?></span></td>
